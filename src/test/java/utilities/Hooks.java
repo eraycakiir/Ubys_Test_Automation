@@ -5,6 +5,7 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 import java.awt.*;
+import java.io.File;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class Hooks extends TestListenerAdapter {
     @Override
     public void onTestSuccess(ITestResult result) {
         // Başarı durumunda trace dosyasını sil
-
+        cleanupOldTraces();
         // Trace kaydını durdur
         try {
             if (context != null) {
@@ -69,6 +70,23 @@ public class Hooks extends TestListenerAdapter {
         if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();
+    }
+
+
+    private void cleanupOldTraces() {
+        final long EXPIRATION_TIME = 86400000; // 24 saat 86400000
+        File dir = new File("src/test/java/utils/traceViewer/");
+        File[] files = dir.listFiles();
+        if (files != null) {
+            long now = System.currentTimeMillis();
+            for (File file : files) {
+                if (now - file.lastModified() > EXPIRATION_TIME) {
+                    if (!file.delete()) {
+                        System.err.println("Failed to delete old trace file: " + file.getPath());
+                    }
+                }
+            }
+        }
     }
 
 }

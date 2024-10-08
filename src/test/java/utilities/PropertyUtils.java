@@ -8,7 +8,7 @@ public class PropertyUtils {
     static Properties properties;
 
     static {
-        try (FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "src/test/resources/config.properties")) {
+        try (FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/config.properties")) {
             properties = new Properties();
             properties.load(fileInputStream);
         } catch (IOException e) {
