@@ -7,10 +7,12 @@ public class BrowserFactory {
 
     private Playwright playwright;
 
+    // Constructor, Playwright nesnesini başlatır
     public BrowserFactory() {
         playwright = Playwright.create();
     }
 
+    // Tarayıcı ismine göre browser nesnesini döner
     public Browser getBrowser(String browserName) {
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions().setHeadless(false);
         BrowserType browserType;
@@ -26,20 +28,21 @@ public class BrowserFactory {
                 break;
             case "chrome":
                 browserType = playwright.chromium();
-                launchOptions.setChannel("chrome");
+                launchOptions.setChannel("chrome"); // Chrome tarayıcısını kullanmak için kanal ayarla
                 break;
             case "edge":
                 browserType = playwright.chromium();
-                launchOptions.setChannel("msedge");
+                launchOptions.setChannel("msedge"); // Edge tarayıcısını kullanmak için kanal ayarla
                 break;
             default:
-                String message = "Browser Name: " + browserName + "specified but not supported.";
+                String message = "Browser Name: " + browserName + " specified but not supported.";
                 message += "Please select a browser";
                 throw new IllegalArgumentException(message);
         }
-        return browserType.launch(launchOptions);
+        return browserType.launch(launchOptions); // Tarayıcıyı başlat
     }
 
+    // Yeni bir tarayıcı bağlamı (context) oluşturur ve trace kaydı başlatır
     public BrowserContext createPageAndGetContext(Browser browser, ITestResult result) {
         BrowserContext context = browser.newContext();
         context.tracing().start(new Tracing.StartOptions()

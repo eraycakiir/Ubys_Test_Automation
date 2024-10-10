@@ -7,6 +7,7 @@ import java.util.Properties;
 public class PropertyUtils {
     static Properties properties;
 
+    // Static blok, config.properties dosyasını yükler
     static {
         try (FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/config.properties")) {
             properties = new Properties();
@@ -16,6 +17,7 @@ public class PropertyUtils {
         }
     }
 
+    // Belirtilen anahtar için config dosyasındaki değeri döner
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
