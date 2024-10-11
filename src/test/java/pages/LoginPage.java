@@ -4,57 +4,72 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import utilities.CaptchaSolver;
+import utilities.HelperFunctions.WaitMethods;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class LoginPage {
     private Page page;
-
-    // Locator'ları sınıf seviyesinde tanımla
+    private CaptchaSolver captchaSolver;
     private Locator usernameField;
+    private Locator menuButton;
     private Locator passwordField;
     private Locator captchaCheckbox;
     private Locator loginButton;
+    private Locator invalidUserPopUp;
     private String siteKey = "6LdoPGwnAAAAAK34xwuEUwVIGrBheaaeXKtt7E7W";
     private String pageUrl = "https://ubs.ikc.edu.tr/";
 
-    // Constructor, Login Page'i Playwright sayfası ile başlatır
+
     public LoginPage(Page page) {
         this.page = page;
+        this.captchaSolver = new CaptchaSolver();  // CaptchaSolver initialize et
         // Locator'ları initialize et
         usernameField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Kullanıcı Adı"));
         passwordField = page.getByPlaceholder("Parola");
         captchaCheckbox = page.frameLocator("iframe").nth(0).getByLabel("Ben robot değilim");
         loginButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Giriş Yap"));
+        invalidUserPopUp = page.getByText("×Bilinmeyen kullanıcı veya");
+        menuButton = page.getByText("MENU Menü Hakkımızda");
     }
 
     // Giriş yapma fonksiyonu
     public void successfulLogin(String username, String password) throws Exception {
-        // Kullanıcı adı ve şifreyi doldur
         usernameField.fill(username);
         passwordField.fill(password);
 
-        // 'Ben robot değilim' checkbox'ını bul ve tıkla
+        // CAPTCHA çözüm işlemi
         captchaCheckbox.click();
-        // reCAPTCHA'nın işaretlenip işaretlenmediğini kontrol et
-        boolean isCaptchaChecked = captchaCheckbox.isChecked();
+        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+        WaitMethods.customWait(5);
+        // çözdükten sonra bir yere tıklayıp çözüm ekranını kapatmak için yazdım
+        page.mouse().click(50, 100);
+        page.mouse().click(50, 100);
 
-        if (!isCaptchaChecked) {
-            System.out.println("Görsel doğrulama gerekiyor. 2Captcha ile çözülüyor...");
-            // 2Captcha ile reCAPTCHA çözümü al
-            CaptchaSolver solver = new CaptchaSolver();
-            String recaptchaResponse = solver.solveCaptcha(siteKey, pageUrl);
-            System.out.println("reCAPTCHA çözüm yanıtı: " + recaptchaResponse);
+        WaitMethods.customWait(5);
+        loginButton.scrollIntoViewIfNeeded();
 
-            // reCAPTCHA çözümünü sayfadaki form alanına gönder
-            page.evaluate("document.getElementById('g-recaptcha-response').value = '" + recaptchaResponse + "';");
-        } else {
-            System.out.println("Görsel doğrulama gerekmiyor, direkt olarak devam ediliyor...");
-        }
-
-        // Eğer iframe varsa engellemesini kaldır
-        page.frameLocator("iframe").nth(0).locator("body").evaluate("element => element.style.pointerEvents = 'none';");
-
-        // Giriş yap butonuna tıkla
         loginButton.click();
-        page.waitForTimeout(10000);  // Giriş işleminin tamamlanması için bekleme
+        WaitMethods.customWait(10);
+
+    }
+
+    public void invalidUserName(String password) throws Exception {
+        usernameField.fill("InvalidUser123");
+        passwordField.fill(password);
+
+        // CAPTCHA çözüm işlemi
+        captchaCheckbox.click();
+        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+        WaitMethods.customWait(5);
+        // çözdükten sonra bir yere tıklayıp çözüm ekranını kapatmak için yazdım
+        page.mouse().click(50, 100);
+        page.mouse().click(50, 100);
+
+        WaitMethods.customWait(5);
+        loginButton.scrollIntoViewIfNeeded();
+        loginButton.click();
+
+        assertThat(invalidUserPopUp).isVisible();
     }
 }

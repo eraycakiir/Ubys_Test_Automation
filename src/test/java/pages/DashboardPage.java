@@ -17,13 +17,8 @@ public class DashboardPage {
 
     // Girişin doğrulanması için loginVerification methodu
     public void loginVerification() {
-        // Metni al
         String actualText = nameAndSurnameText.textContent();
-
-        // Beklenen metin ile karşılaştır
         String expectedText = "ERAY ÇAKIR";
-
-        // Test geçme/kalma durumunu kontrol et
         Assert.assertEquals(actualText, expectedText, "Login verification failed: İsim ve soyisim eşleşmiyor.");
     }
 }
