@@ -12,11 +12,12 @@ public class LoginPage {
     private Page page;
     private CaptchaSolver captchaSolver;
     private Locator usernameField;
-    private Locator menuButton;
     private Locator passwordField;
     private Locator captchaCheckbox;
+    private Locator missingInformationUserPopUp;
     private Locator loginButton;
     private Locator invalidUserPopUp;
+    private Locator robotVerificationPopUp;
     private String siteKey = "6LdoPGwnAAAAAK34xwuEUwVIGrBheaaeXKtt7E7W";
     private String pageUrl = "https://ubs.ikc.edu.tr/";
 
@@ -30,7 +31,8 @@ public class LoginPage {
         captchaCheckbox = page.frameLocator("iframe").nth(0).getByLabel("Ben robot değilim");
         loginButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Giriş Yap"));
         invalidUserPopUp = page.getByText("×Bilinmeyen kullanıcı veya");
-        menuButton = page.getByText("MENU Menü Hakkımızda");
+        robotVerificationPopUp = page.getByText("×Lütfen robot olmadığınızı do");
+        missingInformationUserPopUp = page.getByText("×Kullanıcı adı ve parola").first();
     }
 
     // Giriş yapma fonksiyonu
@@ -71,5 +73,66 @@ public class LoginPage {
         loginButton.click();
 
         assertThat(invalidUserPopUp).isVisible();
+    }
+    public void invalidPassword(String username) throws Exception {
+        usernameField.fill(username);
+        passwordField.fill("RandomPassword12");
+
+        // CAPTCHA çözüm işlemi
+        captchaCheckbox.click();
+        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+        WaitMethods.customWait(5);
+        // çözdükten sonra bir yere tıklayıp çözüm ekranını kapatmak için yazdım
+        page.mouse().click(50, 100);
+        page.mouse().click(50, 100);
+
+        WaitMethods.customWait(5);
+        loginButton.scrollIntoViewIfNeeded();
+        loginButton.click();
+
+        assertThat(invalidUserPopUp).isVisible();
+    }
+
+    public void loginWithoutTypingPassword(String username) throws Exception {
+        usernameField.fill(username);
+
+        // CAPTCHA çözüm işlemi
+        captchaCheckbox.click();
+        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+        WaitMethods.customWait(5);
+        // çözdükten sonra bir yere tıklayıp çözüm ekranını kapatmak için yazdım
+        page.mouse().click(50, 100);
+        page.mouse().click(50, 100);
+
+        WaitMethods.customWait(5);
+        loginButton.scrollIntoViewIfNeeded();
+        loginButton.click();
+
+        assertThat(missingInformationUserPopUp).isVisible();
+    }
+
+    public void loginWithoutTypingUserName(String password) throws Exception {
+        passwordField.fill(password);
+        // CAPTCHA çözüm işlemi
+        captchaCheckbox.click();
+        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+        WaitMethods.customWait(5);
+        // çözdükten sonra bir yere tıklayıp çözüm ekranını kapatmak için yazdım
+        page.mouse().click(50, 100);
+        page.mouse().click(50, 100);
+
+        WaitMethods.customWait(5);
+        loginButton.scrollIntoViewIfNeeded();
+        loginButton.click();
+
+        assertThat(missingInformationUserPopUp).isVisible();
+    }
+
+    public void loginWithoutReCaptcha(String username, String password) throws Exception {
+        usernameField.fill(username);
+        passwordField.fill(password);
+        loginButton.click();
+        assertThat(robotVerificationPopUp).isVisible();
+
     }
 }

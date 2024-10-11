@@ -12,6 +12,7 @@ import static utilities.TestData.username;
 @Listeners(utilities.Hooks.class)
 public class LoginTests {
     private Screens screens;
+
     @Feature("Login Feature")
     @Description("Test for successful login with valid credentials")
     @Test
@@ -32,6 +33,46 @@ public class LoginTests {
         screens = new Screens(page);
         Allure.step("Login with initial password", () -> {
             screens.loginPage().invalidUserName(initialPassword);
+        });
+    }
+
+    @Feature("Login Feature")
+    @Description("Login With Wrong Password")
+    @Test
+    public void loginWithWrongPassword() {
+        screens = new Screens(page);
+        Allure.step("Login with initial password", () -> {
+            screens.loginPage().invalidPassword(username);
+        });
+    }
+
+    @Feature("Login Feature")
+    @Description("Login Without Password")
+    @Test
+    public void loginWithoutPassword() {
+        screens = new Screens(page);
+        Allure.step("Login with initial password", () -> {
+            screens.loginPage().loginWithoutTypingPassword(username);
+        });
+    }
+
+    @Feature("Login Feature")
+    @Description("Login Without Username")
+    @Test
+    public void loginWithoutUsername() {
+        screens = new Screens(page);
+        Allure.step("Login with initial password", () -> {
+            screens.loginPage().loginWithoutTypingUserName(initialPassword);
+        });
+    }
+
+    @Feature("Login Feature")
+    @Description("Login Without ReCaptcha")
+    @Test
+    public void loginWithoutReCaptcha() {
+        screens = new Screens(page);
+        Allure.step("Login with initial password", () -> {
+            screens.loginPage().loginWithoutReCaptcha(username, initialPassword);
         });
     }
 }
