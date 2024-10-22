@@ -7,6 +7,7 @@ public class Screens {
 
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
+    private DashboardPage_AccountSettingModal dashboardPageAccountSettingModal;
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
     public Screens() {
@@ -31,5 +32,12 @@ public class Screens {
             dashboardPage = new DashboardPage(page);
         }
         return dashboardPage;
+    }
+    // Dashboard Page Account SettingModal nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
+    public DashboardPage_AccountSettingModal dashboardPage_AccountSettingModal() {
+        if (dashboardPageAccountSettingModal == null) {
+            dashboardPageAccountSettingModal = new DashboardPage_AccountSettingModal(page);
+        }
+        return dashboardPageAccountSettingModal;
     }
 }

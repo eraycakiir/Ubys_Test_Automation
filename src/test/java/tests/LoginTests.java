@@ -4,6 +4,7 @@ import io.qameta.allure.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Screens;
+import utilities.TestData;
 
 import static utilities.Hooks.page;
 import static utilities.TestData.initialPassword;
@@ -18,11 +19,14 @@ public class LoginTests {
     @Test
     public void successfulLogin() {
         screens = new Screens(page);
-        Allure.step("Login with initial password", () -> {
-            screens.loginPage().successfulLogin(username, initialPassword);  // Sabit şifreyi kullan
+        Allure.step("Login with stored password", () -> {
+            // Eski şifreyi dosyadan oku
+            String currentPassword = TestData.getOldPassword();
+            // Giriş işlemini gerçekleştir
+            screens.loginPage().successfulLogin(username, currentPassword);
         });
         Allure.step("Login verification", () -> {
-            screens.dashboardPage().loginVerification();  // Doğrulama methodunu çağır
+            screens.dashboardPage().loginVerification();  // Giriş doğrulama metodunu çağır
         });
     }
 

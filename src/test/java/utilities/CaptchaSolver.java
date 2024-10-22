@@ -79,6 +79,11 @@ public class CaptchaSolver {
     // CAPTCHA çözümü için sayfada uygulama metodu (CAPTCHA işaretli mi kontrolü dahil)
     public void solveCaptchaForPage(Page page, String siteKey, String pageUrl, Locator captchaCheckbox) throws Exception {
         // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol et
+        // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol etmeden önce bekleme ekleyelim
+        System.out.println("Görsel doğrulama kontrolü için bekleniyor...");
+        WaitMethods.customWait(5);  // CAPTCHA'nın yüklenmesi için 5 saniye bekle
+
+        // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol et
         if (!captchaCheckbox.isChecked()) {
             System.out.println("Görsel doğrulama gerekiyor. 2Captcha ile çözülüyor...");
 
