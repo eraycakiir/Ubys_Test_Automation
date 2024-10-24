@@ -3,7 +3,6 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import utilities.HelperFunctions.WaitMethods;
-import utilities.TestData;
 
 public class DashboardPage_AccountSettingModal {
     private Page page;
@@ -12,6 +11,10 @@ public class DashboardPage_AccountSettingModal {
     private Locator newPasswordAgainField;
     private Locator updateMyInformationButton;
     private Locator updatePasswordButton;
+    public  Locator shortPasswordErrorPopup;
+    public  Locator capitalLetterMissingPopup;
+    public  Locator lowerCaseMissingPopup;
+    public  Locator noNumberMissingPopup;
 
     public DashboardPage_AccountSettingModal(Page page) {
         this.page = page;
@@ -22,6 +25,11 @@ public class DashboardPage_AccountSettingModal {
         updatePasswordButton = page.locator("#accordion div")
                 .filter(new Locator.FilterOptions().setHasText("Şifrenizi Güncellemek İçin Tı"))
                 .nth(1);
+
+        shortPasswordErrorPopup=page.getByText("Şifre en az 10 karakter uzunluğunda olmalıdır!");
+        capitalLetterMissingPopup=page.getByText("Şifre en az 1 büyük karakter");
+        lowerCaseMissingPopup=page.getByText("Şifre en az 1 küçük karakter");
+        noNumberMissingPopup=page.getByText("Şifre en az 1 rakam iç");
     }
 
     // Şifre değiştirme işlemi
@@ -29,25 +37,17 @@ public class DashboardPage_AccountSettingModal {
         // Şifre güncelleme butonuna tıkla
         updatePasswordButton.click();
 
-        // Sayfayı aşağı kaydır
-
-
-        // Mevcut şifre alanını doldur
         currentPasswordField.click();
         currentPasswordField.fill(oldPassword);
 
-        // "Yeni Şifre" alanını doldur
         newPasswordField.click();
         newPasswordField.fill(newPassword);
 
-        // "Yeni ��ifre Tekrar" alanını doldur
         newPasswordAgainField.click();
         newPasswordAgainField.fill(newPassword);
 
-        // Kaydet butonuna tıkla
         updateMyInformationButton.click();
-
         WaitMethods.customWait(4);
-
     }
+
 }

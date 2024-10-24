@@ -12,9 +12,19 @@ public class TestData {
     // İlk login testi için sabit şifre (ilk girişte kullanılacak, daha sonra dosyadan okunacak)
     public static String initialPassword = "34.Ckr1234";
 
-    // Dinamik olarak oluşturulacak şifreyi saklayan değişken
-    public static String dynamicPassword;
+    public static String getShortPassword() {
+        return "eR1";
+    }
 
+    public static String getNoCapitalPassword() {
+        return "46.ery1234";
+    }
+    public static String getNoLowercasePassword() {
+        return "46.ERY1234";
+    }
+    public static String getNoNumberPassword() {
+        return "Ery.cakiir";
+    }
     // Sabit kullanıcı adı
     public static String username = "Y230240099";
 

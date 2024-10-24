@@ -21,8 +21,6 @@ public class DashboardPage {
                 .getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName("Hsp.Ayar"));
 
         userPortalSettingsButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(""));
-
-
     }
 
     // Girişin doğrulanması için loginVerification methodu
@@ -35,6 +33,5 @@ public class DashboardPage {
     public void openTheAccountSettingsModal() {
         userPortalSettingsButton.click();
         accountSettingsButton.click();
-
     }
 }
