@@ -6,18 +6,16 @@ import com.microsoft.playwright.options.AriaRole;
 import utilities.CaptchaSolver;
 import utilities.HelperFunctions.WaitMethods;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 public class LoginPage {
     private Page page;
     private CaptchaSolver captchaSolver;
     private Locator usernameField;
     private Locator passwordField;
     private Locator captchaCheckbox;
-    public  Locator missingInformationUserPopUp;
-    private Locator loginButton;
-    public  Locator invalidUserPopUp;
-    public  Locator robotVerificationPopUp;
+    public Locator missingInformationUserPopUp;
+    public Locator loginButton;
+    public Locator invalidUserPopUp;
+    public Locator robotVerificationPopUp;
     private String siteKey = "6LdoPGwnAAAAAK34xwuEUwVIGrBheaaeXKtt7E7W";
     private String pageUrl = "https://ubs.ikc.edu.tr/";
 
@@ -47,13 +45,14 @@ public class LoginPage {
 
     // Ortak login metodu (CAPTCHA ile)
     public void performLogin(String username, String password) throws Exception {
-        fillLoginDetails(username, password);
+        enterLoginCredentials(username, password);
         solveCaptcha();
-        clickLoginButton();
+        loginButton.click();
+        WaitMethods.customWait(5);
     }
 
-    // Sadece kullanıcı adı ve şifreyi doldurmak için (CAPTCHA çözmeden)
-    public void fillLoginDetails(String username, String password) {
+    // Kullanıcı adı ve şifreyi doldurmak için (CAPTCHA çözmeden)
+    public void enterLoginCredentials(String username, String password) {
         if (username != null) {
             usernameField.fill(username);
         }
@@ -61,12 +60,4 @@ public class LoginPage {
             passwordField.fill(password);
         }
     }
-
-    // CAPTCHA'yı çözmeden giriş butonuna tıklamak için
-    public void clickLoginButton() {
-        loginButton.scrollIntoViewIfNeeded();
-        loginButton.click();
-        WaitMethods.customWait(5);
-    }
-
 }

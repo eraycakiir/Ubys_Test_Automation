@@ -18,7 +18,7 @@ public class LoginTests {
     @Feature("Login Feature")
     @Description("Test for successful login with valid credentials")
     @Test
-    public void successfulLogin() {
+    public void successfulLogin() throws Exception {
         screens = new Screens(page);
         Allure.step("Login with stored password", () -> {
             String currentPassword = TestData.getOldPassword();
@@ -32,7 +32,7 @@ public class LoginTests {
     @Feature("Login Feature")
     @Description("Login With Wrong Username")
     @Test
-    public void loginWithWrongUsername() {
+    public void loginWithWrongUsername() throws Exception {
         screens = new Screens(page);
         Allure.step("Login with invalid username", () -> {
             screens.loginPage().performLogin("InvalidUser123", initialPassword);
@@ -45,7 +45,7 @@ public class LoginTests {
     @Feature("Login Feature")
     @Description("Login With Wrong Password")
     @Test
-    public void loginWithWrongPassword(){
+    public void loginWithWrongPassword() throws Exception {
         screens = new Screens(page);
         Allure.step("Login with wrong password", () -> {
             screens.loginPage().performLogin(username, "RandomPassword12");
@@ -58,12 +58,12 @@ public class LoginTests {
     @Feature("Login Feature")
     @Description("Login Without Password")
     @Test
-    public void loginWithoutPassword(){
+    public void loginWithoutPassword() throws Exception {
         screens = new Screens(page);
         Allure.step("Login without password", () -> {
-            screens.loginPage().fillLoginDetails(username, null);
+            screens.loginPage().enterLoginCredentials(username, null);
             screens.loginPage().solveCaptcha();
-            screens.loginPage().clickLoginButton();
+            screens.loginPage().loginButton.click();
         });
         Allure.step("Verify missing information popup is visible", () -> {
             VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().missingInformationUserPopUp);
@@ -73,27 +73,26 @@ public class LoginTests {
     @Feature("Login Feature")
     @Description("Login Without Username")
     @Test
-    public void loginWithoutUsername(){
+    public void loginWithoutUsername() throws Exception {
         screens = new Screens(page);
         Allure.step("Login without username", () -> {
-            screens.loginPage().fillLoginDetails(null, initialPassword);
+            screens.loginPage().enterLoginCredentials(null, initialPassword);
             screens.loginPage().solveCaptcha();
-            screens.loginPage().clickLoginButton();
+            screens.loginPage().loginButton.click();
         });
         Allure.step("Verify missing information popup is visible", () -> {
             VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().missingInformationUserPopUp);
-
         });
     }
 
     @Feature("Login Feature")
     @Description("Login Without ReCaptcha")
     @Test
-    public void loginWithoutReCaptcha(){
+    public void loginWithoutReCaptcha() throws Exception {
         screens = new Screens(page);
         Allure.step("Login without solving CAPTCHA", () -> {
-            screens.loginPage().fillLoginDetails(username, initialPassword);
-            screens.loginPage().clickLoginButton();
+            screens.loginPage().enterLoginCredentials(username, initialPassword);
+            screens.loginPage().loginButton.click();
         });
         Allure.step("Verify robot verification popup is visible", () -> {
             VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().robotVerificationPopUp);

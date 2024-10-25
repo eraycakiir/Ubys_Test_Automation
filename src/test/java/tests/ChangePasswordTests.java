@@ -13,7 +13,6 @@ import static utilities.Hooks.page;
 import static utilities.TestData.*;
 
 @Listeners(utilities.Hooks.class)
-
 public class ChangePasswordTests {
     private Screens screens;
 
@@ -23,8 +22,7 @@ public class ChangePasswordTests {
     public void successfulChangePassword() {
         screens = new Screens(page);
         Allure.step("Successful login", () -> {
-            String currentPassword = TestData.getOldPassword();
-            screens.loginPage().performLogin(username, currentPassword);
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
         });
 
         Allure.step("Open the account settings modal", () -> {
@@ -32,30 +30,24 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Change password with stored credentials", () -> {
-
-            // Yeni şifreyi oluştur
             String newPassword = TestData.generateRandomPassword();
-
-            // Şifre değiştirme işlemini gerçekleştir
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), newPassword);
-
-            // Şifre güncelleme başarılı olursa, yeni şifreyi dosyaya kaydet
             TestData.updatePassword(newPassword);
-            System.out.println("Şifre başarıyla değiştirildi. Yeni şifre: " + newPassword);
+            System.out.println("Password successfully changed. New password: " + newPassword);
         });
 
         Allure.step("Change Password verification", () -> {
-            screens.dashboardPage().loginVerification();  // Şifre Değiştirme doğrulama metodunu çağır
+            screens.dashboardPage().loginVerification();
         });
     }
+
     @Feature("Change Password Feature")
     @Description("Test for changing password with short password")
     @Test
     public void changePasswordWithShortCode() {
         screens = new Screens(page);
         Allure.step("Successful login", () -> {
-            String currentPassword = TestData.getOldPassword();
-            screens.loginPage().performLogin(username, currentPassword);
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
         });
 
         Allure.step("Open the account settings modal", () -> {
@@ -63,8 +55,6 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Change password with short password", () -> {
-
-            // Genel metodu kullanarak şifreyi değiştir
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), getShortPassword());
         });
 
@@ -72,14 +62,14 @@ public class ChangePasswordTests {
             VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
         });
     }
+
     @Feature("Change Password Feature")
     @Description("Test for changing password with capital letter missing")
     @Test
     public void changePasswordWithCapitalLetterMissing() {
         screens = new Screens(page);
         Allure.step("Successful login", () -> {
-            String currentPassword = TestData.getOldPassword();
-            screens.loginPage().performLogin(username, currentPassword);
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
         });
 
         Allure.step("Open the account settings modal", () -> {
@@ -87,7 +77,6 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Change password with capital letter missing", () -> {
-            // Genel metodu kullanarak şifreyi değiştir
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), getNoCapitalPassword());
         });
 
@@ -95,14 +84,14 @@ public class ChangePasswordTests {
             VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().capitalLetterMissingPopup);
         });
     }
+
     @Feature("Change Password Feature")
-    @Description("Test for changing password with Lower Case missing")
+    @Description("Test for changing password with lower case missing")
     @Test
     public void changePasswordWithLowerCaseMissing() {
         screens = new Screens(page);
         Allure.step("Successful login", () -> {
-            String currentPassword = TestData.getOldPassword();
-            screens.loginPage().performLogin(username, currentPassword);
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
         });
 
         Allure.step("Open the account settings modal", () -> {
@@ -110,7 +99,6 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Change password with lower case missing", () -> {
-            // Genel metodu kullanarak şifreyi değiştir
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), getNoLowercasePassword());
         });
 
@@ -118,14 +106,14 @@ public class ChangePasswordTests {
             VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().lowerCaseMissingPopup);
         });
     }
+
     @Feature("Change Password Feature")
     @Description("Test for changing password with no number")
     @Test
     public void changePasswordWithNoNumber() {
         screens = new Screens(page);
         Allure.step("Successful login", () -> {
-            String currentPassword = TestData.getOldPassword();
-            screens.loginPage().performLogin(username, currentPassword);
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
         });
 
         Allure.step("Open the account settings modal", () -> {
@@ -133,7 +121,6 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Change password with no number", () -> {
-            // Genel metodu kullanarak şifreyi değiştir
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), getNoNumberPassword());
         });
 
@@ -141,5 +128,72 @@ public class ChangePasswordTests {
             VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().noNumberMissingPopup);
         });
     }
-}
 
+    @Feature("Change Password Feature")
+    @Description("Test for changing password with the same old password")
+    @Test
+    public void changePasswordWithSamePassword() {
+        screens = new Screens(page);
+        Allure.step("Successful login", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
+
+        Allure.step("Open the account settings modal", () -> {
+            screens.dashboardPage().openTheAccountSettingsModal();
+        });
+
+        Allure.step("Change password with the same old password", () -> {
+            screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), getOldPassword());
+        });
+
+        Allure.step("Verify that the same password error is displayed", () -> {
+            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().samePasswordErrorPopup);
+        });
+    }
+
+    @Feature("Change Password Feature")
+    @Description("Test for changing password without providing the new password repeat")
+    @Test
+    public void changePasswordWithoutNewPasswordRepeat() {
+        screens = new Screens(page);
+        Allure.step("Successful login", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
+
+        Allure.step("Open the account settings modal", () -> {
+            screens.dashboardPage().openTheAccountSettingsModal();
+        });
+
+        Allure.step("Attempt to change password without new password repeat", () -> {
+            String newPassword = TestData.generateRandomPassword();
+            screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), newPassword, null);
+        });
+
+        Allure.step("Verify that the missing new password repeat error is displayed", () -> {
+            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().missingNewPasswordRepeatPopup);
+        });
+    }
+
+    @Feature("Change Password Feature")
+    @Description("Test for changing password without providing the new password")
+    @Test
+    public void changePasswordWithoutNewPassword() {
+        screens = new Screens(page);
+        Allure.step("Successful login", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
+
+        Allure.step("Open the account settings modal", () -> {
+            screens.dashboardPage().openTheAccountSettingsModal();
+        });
+
+        Allure.step("Attempt to change password without providing the new password", () -> {
+            String newPassword = TestData.generateRandomPassword();
+            screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), null, newPassword);
+        });
+
+        Allure.step("Verify that the missing new password error is displayed", () -> {
+            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
+        });
+    }
+}
