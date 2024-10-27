@@ -2,7 +2,6 @@ package tests;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Listeners;
@@ -21,10 +20,10 @@ import static utilities.TestData.username;
 public class StudentInformationScreenTests {
     private Screens screens;
 
-    @Feature("Login Feature")
-    @Description("Test for successful login with valid credentials")
+    @Feature("Student Information Screen Sub Module")
+    @Description("Testing the visibility of the elements in the Sub-Module on the Student Information Screen")
     @Test
-    public void testVisibleElementsWithDetailedCheck() throws Exception {
+    public void elementVisibilityTestInSubmodule() throws Exception {
         screens = new Screens(page);
         screens.loginPage().performLogin(username, TestData.getOldPassword());
 
@@ -48,6 +47,6 @@ public class StudentInformationScreenTests {
         elementsToCheck.put(screens.studentInformationScreen().documentRequest, "Document Request");
         elementsToCheck.put(screens.studentInformationScreen().weeklyClassSchedule, "Weekly Class Schedule");
 
-        VisibleCheckMethods.areAllVisibleWithDetails(elementsToCheck);
+        VisibleCheckMethods.validateElementsVisibility(elementsToCheck);
     }
 }

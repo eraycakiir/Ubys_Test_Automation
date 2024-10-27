@@ -13,7 +13,7 @@ public class VisibleCheckMethods {
     }
 
     // Locator listesi alarak tüm nesnelerin görünürlüğünü kontrol eden metot
-    public static boolean areAllVisibleWithDetails(Map<Locator, String> locators) {
+    public static boolean validateElementsVisibility(Map<Locator, String> locators) {
         boolean allVisible = true;
 
         for (Map.Entry<Locator, String> entry : locators.entrySet()) {
