@@ -1,5 +1,4 @@
 package tests;
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -8,10 +7,8 @@ import org.testng.annotations.Test;
 import pages.Screens;
 import utilities.HelperFunctions.VisibleCheckMethods;
 import utilities.TestData;
-
 import static utilities.Hooks.page;
 import static utilities.TestData.*;
-
 @Listeners(utilities.Hooks.class)
 public class ChangePasswordTests {
     private Screens screens;
@@ -191,7 +188,7 @@ public class ChangePasswordTests {
             String newPassword = TestData.generateRandomPassword();
             screens.dashboardPage_AccountSettingModal().changePassword(getOldPassword(), null, newPassword);
         });
-
+        
         Allure.step("Verify that the missing new password error is displayed", () -> {
             VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
         });

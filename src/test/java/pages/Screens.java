@@ -4,10 +4,10 @@ import com.microsoft.playwright.Page;
 
 public class Screens {
     private Page page;
-
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
     private DashboardPage_AccountSettingModal dashboardPageAccountSettingModal;
+    private StudentInformationScreenPage studentInformationScreen ;
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
     public Screens() {
@@ -39,5 +39,13 @@ public class Screens {
             dashboardPageAccountSettingModal = new DashboardPage_AccountSettingModal(page);
         }
         return dashboardPageAccountSettingModal;
+    }
+
+    // Dashboard Page Account SettingModal nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
+    public StudentInformationScreenPage studentInformationScreen() {
+        if (studentInformationScreen == null) {
+            studentInformationScreen = new StudentInformationScreenPage(page);
+        }
+        return studentInformationScreen;
     }
 }
