@@ -52,4 +52,6 @@ public class DashboardPage {
         studentInfoLink.click();  // Basınca Yeni Sekme Açılacak
         WaitMethods.customWait(10); // Sayfanın tamamen yüklenmesi için ekstra bekleme
     }
+
+
 }

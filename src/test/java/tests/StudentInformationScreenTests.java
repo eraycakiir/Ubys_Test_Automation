@@ -1,7 +1,7 @@
 package tests;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Listeners;
@@ -9,9 +9,8 @@ import org.testng.annotations.Test;
 import pages.Screens;
 import utilities.HelperFunctions.TabManagementMethods;
 import utilities.HelperFunctions.VisibleCheckMethods;
+import utilities.HelperFunctions.WaitMethods;
 import utilities.TestData;
-import java.util.HashMap;
-import java.util.Map;
 
 import static utilities.Hooks.page;
 import static utilities.TestData.username;
@@ -25,28 +24,49 @@ public class StudentInformationScreenTests {
     @Test
     public void elementVisibilityTestInSubmodule() throws Exception {
         screens = new Screens(page);
-        screens.loginPage().performLogin(username, TestData.getOldPassword());
 
-        // Öğrenci bilgi ekranına git ve yeni sekmeye geçiş yap
-        screens.dashboardPage().navigateToStudentInfoScreen();
-        Page newTab = TabManagementMethods.switchToNewTab(page);
+        Allure.step("Login to the application with valid credentials", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
 
-        // Yeni sekmede screens sınıfını yeniden başlat
-        screens = new Screens(newTab);
+        Allure.step("Navigate to the Student Information Screen", () -> {
+            screens.dashboardPage().navigateToStudentInfoScreen();
+            Page newTab = TabManagementMethods.switchToNewTab(page);
+            screens = new Screens(newTab);
+        });
 
-        // Yeni sekmedeki elementlerin görünürlük kontrolünü gerçekleştir
-        Map<Locator, String> elementsToCheck = new HashMap<>();
-        elementsToCheck.put(screens.studentInformationScreen().lessons, "Lessons");
-        elementsToCheck.put(screens.studentInformationScreen().myLiveLessons, "My Live Lesson");
-        elementsToCheck.put(screens.studentInformationScreen().calendar, "Calendar");
-        elementsToCheck.put(screens.studentInformationScreen().liveLesson, "Live Lesson");
-        elementsToCheck.put(screens.studentInformationScreen().courseSelectionCourseRegistration, "Course Selection/Registration");
-        elementsToCheck.put(screens.studentInformationScreen().resume, "Resume");
-        elementsToCheck.put(screens.studentInformationScreen().capApplication, "CAP Application");
-        elementsToCheck.put(screens.studentInformationScreen().erasmusApplication, "Erasmus Application");
-        elementsToCheck.put(screens.studentInformationScreen().documentRequest, "Document Request");
-        elementsToCheck.put(screens.studentInformationScreen().weeklyClassSchedule, "Weekly Class Schedule");
+        Allure.step("Verify visibility of elements in the Sub-Module", () -> {
+            VisibleCheckMethods.validateElementsVisibility(screens.studentInformationScreen().getSubModuleElementsForVisibility());
+        });
+    }
 
-        VisibleCheckMethods.validateElementsVisibility(elementsToCheck);
+    @Feature("Student Information Screen Upper Module")
+    @Description("Testing the visibility of the elements in the Upper Module on the Student Information Screen")
+    @Test
+    public void elementVisibilityTestInUpperModule() throws Exception {
+        screens = new Screens(page);
+
+        Allure.step("Login to the application with valid credentials", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
+
+        Allure.step("Navigate to the Student Information Screen", () -> {
+            screens.dashboardPage().navigateToStudentInfoScreen();
+            Page newTab = TabManagementMethods.switchToNewTab(page);
+            screens = new Screens(newTab);
+        });
+
+        Allure.step("Verify visibility of elements in the Upper Module", () -> {
+            VisibleCheckMethods.validateElementsVisibility(screens.studentInformationScreen().getUpperModuleElementsForVisibility());
+        });
+
+        Allure.step("Expand the 'Other' dropdown menu", () -> {
+            screens.studentInformationScreen().otherDropdown.click();
+            WaitMethods.customWait(3);
+        });
+
+        Allure.step("Verify visibility of elements in the dropdown menu", () -> {
+            VisibleCheckMethods.validateElementsVisibility(screens.studentInformationScreen().getDropdownElementsForVisibility());
+        });
     }
 }
