@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import utilities.HelperFunctions.WaitMethods;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +18,15 @@ public class TranscriptPage {
     public Locator calculateTranscript;
     public Locator saveCalculateTranscript;
     public Locator totalAverage;
+    public Locator resetButton;
+    public Locator historicalTranscript;
+
+    public Locator fallSemester_2023;
+    public Locator springSemester_2023
+            ;
+    public Locator fallSemester_2024;
+
+    private List<String> gradeOrder = Arrays.asList("FF", "DD", "DC", "CC", "CB", "BB", "BA", "AA");
 
     public TranscriptPage(Page page) {
         this.page = page;
@@ -28,62 +37,116 @@ public class TranscriptPage {
         totalAverage = page.locator("#totalAverage_3");
         calculateTranscript = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Transkript Hesaplama"));
         saveCalculateTranscript = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Transkript Hesapla"));
+        historicalTranscript = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Tarihsel Transcript"));
+        resetButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Sıfırla"));
+        fallSemester_2023 = page.getByText("2023 Yılı Güz Dönemi");
+        springSemester_2023 = page.getByText("Yılı Bahar Dönemi");
+        fallSemester_2024 = page.getByText("2024 Yılı Güz Dönemi");
     }
 
-    // İlk 10 select elementinden "AA" olmayanları seçip birini rastgele "AA" olarak ayarlayan method
-    public void selectRandomOptionAsAA() {
-        List<Locator> nonAAElements = new ArrayList<>();
-        int limit = Math.min(selectElements.count(), 10); // En fazla ilk 10 elemanı işle
+    // Rastgele bir `select` elemanını seçip belirtilen yönde (yükseltme veya düşürme) notu ayarlayan method
+    public void changeGradeRandomly(boolean increase) {
+        Random random = new Random();
+        int randomIndex;
+        Locator selectedElement;
+        String currentGrade;
 
-        System.out.println("Kontrol edilen ilk 10 select elementin listesi:");
+        // AA veya FF olmayan bir not seçene kadar döngüye devam et
+        do {
+            randomIndex = random.nextInt(Math.min(selectElements.count(), 10)); // İlk 10 eleman içinden rastgele seçim
+            selectedElement = selectElements.nth(randomIndex);
 
-        // İlk 10 `select` elemanını inceleyip log ekleyelim
-        for (int i = 0; i < limit; i++) {
-            Locator selectElement = selectElements.nth(i);
+            // Mevcut notu al
+            currentGrade = (String) selectedElement.evaluate("el => el.options[el.selectedIndex].text");
+        } while (currentGrade.equals("AA") || currentGrade.equals("FF"));
 
-            // Seçili olan option elementinin text değerini al
-            String selectedText = (String) selectElement.evaluate("el => el.options[el.selectedIndex].text");
-            System.out.println("Element " + (i + 1) + ": Seçili değer: " + selectedText);
+        System.out.println("Seçilen uygun not: " + currentGrade);
 
-            // Eğer seçili değer "AA" değilse listeye ekle
-            if (!selectedText.equals("AA")) {
-                nonAAElements.add(selectElement);
-            }
+        int gradeIndex = gradeOrder.indexOf(currentGrade);
+        if (gradeIndex == -1) {
+            System.out.println("Mevcut not sıralamada bulunamadı: " + currentGrade);
+            return;
         }
 
-        // Seçilecek element bulunup bulunmadığını kontrol et
-        if (!nonAAElements.isEmpty()) {
-            Random random = new Random();
-            Locator randomSelect = nonAAElements.get(random.nextInt(nonAAElements.size()));
-
-            // Rastgele seçilen elementin eski değerini loglayalım
-            String beforeChangeText = (String) randomSelect.evaluate("el => el.options[el.selectedIndex].text");
-            System.out.println("Seçilen elementin eski değeri: " + beforeChangeText);
-
-            // Yeni değeri "AA" olarak ayarla ve yeni değeri loglayalım
-            randomSelect.selectOption("AA");
-            String afterChangeText = (String) randomSelect.evaluate("el => el.options[el.selectedIndex].text");
-            System.out.println("Seçilen elementin yeni değeri: " + afterChangeText);
-        } else {
-            System.out.println("Tüm elementler zaten 'AA' olarak seçilmiş.");
+        // Yükseltme veya düşürme işlemini gerçekleştir
+        String newGrade = currentGrade;
+        if (increase && gradeIndex < gradeOrder.size() - 1) {
+            newGrade = gradeOrder.get(gradeIndex + 1); // Bir üst not
+        } else if (!increase && gradeIndex > 0) {
+            newGrade = gradeOrder.get(gradeIndex - 1); // Bir alt not
         }
+
+        // Yeni notu ayarla
+        selectedElement.selectOption(newGrade);
+        System.out.println("Yeni ayarlanan not: " + newGrade);
     }
-
-    // Ortalama değerinin artışını kontrol eden method
-    public boolean isAverageIncreasedAfterChange() {
-        // İlk ortalamayı al
+    // Ortalama değerinin belirtilen değişikliğe göre değişip değişmediğini kontrol eden method
+    public boolean isAverageChangedAfterRandomChange(boolean shouldIncrease) {
         double initialAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Başlangıçtaki ortalama: " + initialAverage);
+        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
 
-        // Rastgele bir seçeneği AA olarak değiştir
-        selectRandomOptionAsAA();
+        // Rastgele bir notu artır veya azalt
+        changeGradeRandomly(shouldIncrease);
         saveCalculateTranscript.click();
         WaitMethods.customWait(3);
-        // Yeni ortalamayı al
-        double updatedAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Güncellenen ortalama: " + updatedAverage);
 
-        // Ortalama arttıysa true, aksi takdirde false döndür
-        return updatedAverage > initialAverage;
+        double updatedAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Güncellenen Ortalama: " + updatedAverage);
+        // Eğer shouldIncrease true ise ortalamanın arttığını kontrol et, false ise azaldığını kontrol et
+        return shouldIncrease ? updatedAverage > initialAverage : updatedAverage < initialAverage;
     }
+    public boolean isAverageResetAfterChange(boolean shouldIncrease) {
+        // İlk ortalamayı al
+        double initialAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
+
+        // Ortalama değişimini uygula (yükseltme veya düşürme)
+        changeGradeRandomly(shouldIncrease);
+        saveCalculateTranscript.click();
+        WaitMethods.customWait(5);
+
+        // Güncellenen ortalamayı al ve değiştiğini doğrula
+        double updatedAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Güncellenen Ortalama: " + updatedAverage);
+        boolean isChanged = shouldIncrease ? updatedAverage > initialAverage : updatedAverage < initialAverage;
+        if (!isChanged) {
+            System.out.println("Ortalama beklenildiği gibi değişmedi.");
+            return false;
+        }
+
+        // Reset butonuna tıklayarak eski değere dön
+        resetButton.click();
+        WaitMethods.customWait(5);
+
+        // Reset işleminden sonraki ortalamayı al ve başlangıç ortalamasına eşit olduğunu doğrula
+        double resetAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Sıfırlandıktan sonraki Ortalama: " + resetAverage);
+        return resetAverage == initialAverage;
+    }
+    public boolean isAverageUnchangedAfterSameGradeSelection() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(Math.min(selectElements.count(), 10)); // İlk 10 eleman içinden rastgele seçim
+        Locator selectedElement = selectElements.nth(randomIndex);
+
+        // Mevcut notu al
+        String currentGrade = (String) selectedElement.evaluate("el => el.options[el.selectedIndex].text");
+        System.out.println("Seçilen not: " + currentGrade);
+
+        // İlk ortalamayı al
+        double initialAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
+
+        // Aynı notu tekrar seç
+        selectedElement.selectOption(currentGrade);
+        saveCalculateTranscript.click();
+        WaitMethods.customWait(3);
+
+        // Güncellenen ortalamayı al
+        double updatedAverage = Double.parseDouble(totalAverage.innerText());
+        System.out.println("Güncellenen Ortalama: " + updatedAverage);
+
+        // Beklenti: Ortalama değişmemelidir
+        return initialAverage == updatedAverage;
+    }
+
 }
