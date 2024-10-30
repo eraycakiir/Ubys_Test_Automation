@@ -3,10 +3,17 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Allure;
+import utilities.HelperFunctions.TabManagementMethods;
 import utilities.HelperFunctions.WaitMethods;
+import utilities.TestData;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static utilities.Hooks.page;
+import static utilities.Hooks.screens;
+import static utilities.TestData.username;
 
 public class StudentInformationScreenPage {
     private Page page;
@@ -76,6 +83,18 @@ public class StudentInformationScreenPage {
         extensionInformation = this.page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Ek Süre Bilgileri"));
     }
 
+    public void navigateToInformationScreenPage() {
+        Allure.step("Login to the application with valid credentials", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
+
+        Allure.step("Navigate to the Student Information Screen", () -> {
+            screens.dashboardPage().navigateToStudentInfoScreen();
+            Page newTab = TabManagementMethods.switchToNewTab(page);
+            screens = new Screens(newTab);
+        });
+    }
+
     // Sub Module Elementleri için görünürlük kontrolü döndüren method
     public Map<Locator, String> getSubModuleElementsForVisibility() {
         Map<Locator, String> elementsToCheck = new HashMap<>();
@@ -120,7 +139,7 @@ public class StudentInformationScreenPage {
         return dropdownElementsToCheck;
     }
 
-    public void navigateToTranscriptPage() {
+    public void clickToTranscriptButton() {
         transcript.click();
         transcriptSubElement.click();
         WaitMethods.customWait(7);

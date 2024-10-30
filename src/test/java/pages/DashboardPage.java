@@ -3,8 +3,14 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
+import utilities.HelperFunctions.TabManagementMethods;
 import utilities.HelperFunctions.WaitMethods;
+import utilities.TestData;
+
+import static utilities.Hooks.screens;
+import static utilities.TestData.username;
 
 public class DashboardPage {
     private Page page;
@@ -28,7 +34,15 @@ public class DashboardPage {
         studentSystemButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("ÖĞRENCİ SİSTEMİ "));
         studentInfoLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("- Öğrenci Bilgi Ekranı"));
     }
+    public void navigateToAccountSettingsModal() {
+        Allure.step("Successful login", () -> {
+            screens.loginPage().performLogin(username, TestData.getOldPassword());
+        });
 
+        Allure.step("Open the account settings modal", () -> {
+            screens.dashboardPage().openTheAccountSettingsModal();
+        });
+    }
     // Girişin doğrulanması için loginVerification methodu
     public void loginVerification() {
         String actualText = nameAndSurnameText.textContent();

@@ -3,11 +3,16 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Allure;
+import utilities.HelperFunctions.TabManagementMethods;
 import utilities.HelperFunctions.WaitMethods;
+import utilities.TestData;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import static utilities.Hooks.screens;
 
 public class TranscriptPage {
     private Page page;
@@ -42,6 +47,23 @@ public class TranscriptPage {
         fallSemester_2023 = page.getByText("2023 Yılı Güz Dönemi");
         springSemester_2023 = page.getByText("Yılı Bahar Dönemi");
         fallSemester_2024 = page.getByText("2024 Yılı Güz Dönemi");
+    }
+    public void navigateToTranscriptPage() {
+        Allure.step("Login to the application with valid credentials", () -> {
+            screens.loginPage().performLogin(TestData.username, TestData.getOldPassword());
+        });
+
+        Allure.step("Navigate to the Student Information Screen", () -> {
+            screens.dashboardPage().navigateToStudentInfoScreen();
+            Page newTab = TabManagementMethods.switchToNewTab(page);
+            screens = new Screens(newTab);
+        });
+
+        Allure.step("Navigate to the Transcript Page", () -> {
+            screens.studentInformationScreen().clickToTranscriptButton();
+            Page newTab2 = TabManagementMethods.switchToNewTab(page);
+            screens = new Screens(newTab2);
+        });
     }
 
     // Rastgele bir `select` elemanını seçip belirtilen yönde (yükseltme veya düşürme) notu ayarlayan method
