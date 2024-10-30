@@ -3,11 +3,9 @@ package tests;
 import io.qameta.allure.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.Screens;
 import utilities.HelperFunctions.VisibleCheckMethods;
 import utilities.TestData;
 
-import static utilities.Hooks.page;
 import static utilities.Hooks.screens;
 import static utilities.TestData.initialPassword;
 import static utilities.TestData.username;
@@ -36,7 +34,7 @@ public class LoginTests {
             screens.loginPage().performLogin("InvalidUser123", initialPassword);
         });
         Allure.step("Verify invalid user popup is visible", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().invalidUserPopUp);
+            VisibleCheckMethods.isElementVisible(screens.loginPage().invalidUserPopUp);
         });
     }
 
@@ -48,7 +46,7 @@ public class LoginTests {
             screens.loginPage().performLogin(username, "RandomPassword12");
         });
         Allure.step("Verify invalid user popup is visible", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().invalidUserPopUp);
+            VisibleCheckMethods.isElementVisible(screens.loginPage().invalidUserPopUp);
         });
     }
 
@@ -62,7 +60,7 @@ public class LoginTests {
             screens.loginPage().loginButton.click();
         });
         Allure.step("Verify missing information popup is visible", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().missingInformationUserPopUp);
+            VisibleCheckMethods.isElementVisible(screens.loginPage().missingInformationUserPopUp);
         });
     }
 
@@ -76,7 +74,7 @@ public class LoginTests {
             screens.loginPage().loginButton.click();
         });
         Allure.step("Verify missing information popup is visible", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().missingInformationUserPopUp);
+            VisibleCheckMethods.isElementVisible(screens.loginPage().missingInformationUserPopUp);
         });
     }
 
@@ -89,7 +87,7 @@ public class LoginTests {
             screens.loginPage().loginButton.click();
         });
         Allure.step("Verify robot verification popup is visible", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.loginPage().robotVerificationPopUp);
+            VisibleCheckMethods.isElementVisible(screens.loginPage().robotVerificationPopUp);
         });
     }
 }

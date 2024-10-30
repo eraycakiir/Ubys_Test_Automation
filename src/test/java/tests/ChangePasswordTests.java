@@ -4,10 +4,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.Screens;
 import utilities.HelperFunctions.VisibleCheckMethods;
 import utilities.TestData;
-import static utilities.Hooks.page;
+
 import static utilities.Hooks.screens;
 import static utilities.TestData.*;
 @Listeners(utilities.Hooks.class)
@@ -40,7 +39,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the short password error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
         });
     }
 
@@ -54,7 +53,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the capital letter missing error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().capitalLetterMissingPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().capitalLetterMissingPopup);
         });
     }
 
@@ -68,7 +67,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the lower case missing error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().lowerCaseMissingPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().lowerCaseMissingPopup);
         });
     }
 
@@ -82,7 +81,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the no number error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().noNumberMissingPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().noNumberMissingPopup);
         });
     }
 
@@ -96,7 +95,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the same password error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().samePasswordErrorPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().samePasswordErrorPopup);
         });
     }
 
@@ -111,7 +110,7 @@ public class ChangePasswordTests {
         });
 
         Allure.step("Verify that the missing new password repeat error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().missingNewPasswordRepeatPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().missingNewPasswordRepeatPopup);
         });
     }
 
@@ -126,7 +125,7 @@ public class ChangePasswordTests {
         });
         
         Allure.step("Verify that the missing new password error is displayed", () -> {
-            VisibleCheckMethods.isErrorPopupVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
+            VisibleCheckMethods.isElementVisible(screens.dashboardPage_AccountSettingModal().shortPasswordErrorPopup);
         });
     }
 }

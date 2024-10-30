@@ -8,7 +8,7 @@ public class VisibleCheckMethods {
 
 
     // Genel pop-up kontrol metodu
-    public static boolean isErrorPopupVisible(Locator locator) {
+    public static boolean isElementVisible(Locator locator) {
         return locator.isVisible();
     }
 

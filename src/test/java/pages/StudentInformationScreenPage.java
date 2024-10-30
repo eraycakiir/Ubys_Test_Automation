@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Allure;
 import utilities.HelperFunctions.TabManagementMethods;
+import utilities.HelperFunctions.VisibleCheckMethods;
 import utilities.HelperFunctions.WaitMethods;
 import utilities.TestData;
 
@@ -17,6 +18,7 @@ import static utilities.TestData.username;
 
 public class StudentInformationScreenPage {
     private Page page;
+    //---Sub Module Elements-------//
     public Locator lessons;
     public Locator myLiveLessons;
     public Locator calendar;
@@ -27,9 +29,15 @@ public class StudentInformationScreenPage {
     public Locator erasmusApplication;
     public Locator documentRequest;
     public Locator weeklyClassSchedule;
+
+    //---Upper Module Elements-------//
+
     public Locator selectAcademicProgram;
     public Locator transcript;
     public Locator otherDropdown;
+
+
+    //---Other Dropdown Elements-------//
     public Locator feeInformation;
     public Locator advisorInformation;
     public Locator historyInformation;
@@ -45,6 +53,12 @@ public class StudentInformationScreenPage {
     public Locator ibanInformation;
     public Locator extensionInformation;
     public Locator transcriptSubElement;
+
+    // Elements in the modals that open the elements in the Other dropdown -------//
+    public Locator feeInformationVerify;
+    public Locator advisorInformationVerify;
+
+
 
     public StudentInformationScreenPage(Page page) {
         this.page = page;
@@ -81,6 +95,10 @@ public class StudentInformationScreenPage {
         leaveInformation = this.page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("İzin Bilgileri"));
         ibanInformation = this.page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("IBAN Bilgileri"));
         extensionInformation = this.page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Ek Süre Bilgileri"));
+
+        // Elements in the modals that open the elements in the Other dropdown -------//
+        feeInformationVerify = this.page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Harç Bilgileri"));
+        advisorInformationVerify = this.page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Danışman Bilgisi"));
     }
 
     public void navigateToInformationScreenPage() {
@@ -144,4 +162,5 @@ public class StudentInformationScreenPage {
         transcriptSubElement.click();
         WaitMethods.customWait(7);
     }
+
 }
