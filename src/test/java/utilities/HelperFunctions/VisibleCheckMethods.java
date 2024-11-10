@@ -1,7 +1,9 @@
 package utilities.HelperFunctions;
 
 import com.microsoft.playwright.Locator;
+import org.junit.Assert;
 
+import java.util.List;
 import java.util.Map;
 
 public class VisibleCheckMethods {
@@ -40,5 +42,6 @@ public class VisibleCheckMethods {
 
         return allVisible;
     }
+
 
 }

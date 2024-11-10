@@ -9,6 +9,7 @@ public class Screens {
     private DashboardPage_AccountSettingModal dashboardPageAccountSettingModal;
     private StudentInformationScreenPage studentInformationScreen ;
     private TranscriptPage transcriptPage ;
+    private ConversationPage conversationPage ;
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
     public Screens() {
@@ -54,6 +55,13 @@ public class Screens {
             transcriptPage = new TranscriptPage(page);
         }
         return transcriptPage;
+    }
+
+    public ConversationPage conversationPage() {
+        if (conversationPage == null) {
+            conversationPage = new ConversationPage(page);
+        }
+        return conversationPage;
     }
 
 }

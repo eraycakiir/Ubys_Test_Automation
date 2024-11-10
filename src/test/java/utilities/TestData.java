@@ -25,6 +25,13 @@ public class TestData {
     public static String getNoNumberPassword() {
         return "Ery.cakiir";
     }
+    public static String getTrueIBAN() {
+        return "TR48 0011 1000 0000 0103 7435 69";
+    }
+    public static String getWrongIBAN() {
+        return "TR00 0000 0000 0000 0000 0000 00";
+    }
+    public static String validUploadPhoto = System.getProperty("user.home")+"/Projects/Ubys_Test_Automation/src/test/java/utilities/files/Eray_Biyometrik_Foto.png";
     // Sabit kullanıcı adı
     public static String username = "Y230240099";
 
