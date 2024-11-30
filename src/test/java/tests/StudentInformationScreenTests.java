@@ -10,9 +10,6 @@ import utilities.HelperFunctions.TabManagementMethods;
 import utilities.HelperFunctions.VisibleCheckMethods;
 import utilities.HelperFunctions.WaitMethods;
 import utilities.TestData;
-
-import java.nio.file.Paths;
-
 import static utilities.Hooks.page;
 import static utilities.Hooks.screens;
 
