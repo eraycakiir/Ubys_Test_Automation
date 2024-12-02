@@ -11,6 +11,7 @@ public class Screens {
     private TranscriptPage transcriptPage ;
     private MyLessonPage myLessonPage ;
     private ConversationPage conversationPage ;
+    private LessonDetailPage lessonDetailPage ;
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
     public Screens() {
@@ -70,5 +71,10 @@ public class Screens {
         }
         return myLessonPage;
     }
-
+    public LessonDetailPage lessonDetailPage() {
+        if (lessonDetailPage == null) {
+            lessonDetailPage = new LessonDetailPage(page);
+        }
+        return lessonDetailPage;
+    }
 }

@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Allure;
 import utilities.HelperFunctions.TabManagementMethods;
+import utilities.HelperFunctions.WaitMethods;
 import utilities.TestData;
 
 import java.util.HashMap;
@@ -22,6 +23,10 @@ public class MyLessonPage {
     public Locator firstYear;
     public Locator secondYear;
     public Locator thirdYear;
+    public Locator lessonSearchBox;
+    public Locator lessonName;
+    public Locator lessonLink;
+
     public MyLessonPage(Page page) {
         this.page = page;
         thesisInformation = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Tez Bilgileri"));
@@ -31,6 +36,9 @@ public class MyLessonPage {
         firstYear = page.getByText("- Güz - YANO: 0");
         secondYear = page.getByText("- Bahar - YANO: 3,90");
         thirdYear = page.getByText("- Güz - YANO: 3,30");
+        lessonSearchBox = page.locator("#search-Bahar2023table");
+        lessonName = page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("Bilgi Sistemleri"));
+        lessonLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("YZMU"));
     }
 
     public void navigateToMyLessonPage() {
@@ -50,6 +58,7 @@ public class MyLessonPage {
             screens = new Screens(newTab2);
         });
     }
+
     public Map<Locator, String> getThesisInformationElementsForVisibility() {
         Map<Locator, String> dropdownElementsToCheck = new HashMap<>();
         dropdownElementsToCheck.put(thesisInformation, "Thesis Information");
@@ -57,6 +66,7 @@ public class MyLessonPage {
         dropdownElementsToCheck.put(projectConsultant, "Project Consultant");
         return dropdownElementsToCheck;
     }
+
     public Map<Locator, String> checkVisibleElementsAfterShowPastClasses() {
         Map<Locator, String> dropdownElementsToCheck = new HashMap<>();
         dropdownElementsToCheck.put(firstYear, "- Güz - YANO: 0");
