@@ -5,7 +5,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Allure;
 import utilities.HelperFunctions.TabManagementMethods;
-import utilities.HelperFunctions.WaitMethods;
 import utilities.TestData;
 
 import java.util.HashMap;
@@ -27,6 +26,7 @@ public class MyLessonPage {
     public Locator lessonName;
     public Locator lessonLink;
 
+
     public MyLessonPage(Page page) {
         this.page = page;
         thesisInformation = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Tez Bilgileri"));
@@ -39,6 +39,7 @@ public class MyLessonPage {
         lessonSearchBox = page.locator("#search-Bahar2023table");
         lessonName = page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("Bilgi Sistemleri"));
         lessonLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("YZMU"));
+
     }
 
     public void navigateToMyLessonPage() {

@@ -12,6 +12,10 @@ public class Screens {
     private MyLessonPage myLessonPage ;
     private ConversationPage conversationPage ;
     private LessonDetailPage lessonDetailPage ;
+    private LiveLessonPage liveLessonPage ;
+    private CalendarPage calendarPage ;
+    private CourseSelectionCourseRegistrationPage courseSelectionCourseRegistrationPage ;
+
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
     public Screens() {
@@ -76,5 +80,24 @@ public class Screens {
             lessonDetailPage = new LessonDetailPage(page);
         }
         return lessonDetailPage;
+    }
+    public LiveLessonPage liveLessonPage() {
+        if (liveLessonPage == null) {
+            liveLessonPage = new LiveLessonPage(page);
+        }
+        return liveLessonPage;
+    }
+
+    public CalendarPage calendarPage() {
+        if (calendarPage == null) {
+            calendarPage = new CalendarPage(page);
+        }
+        return calendarPage;
+    }
+    public CourseSelectionCourseRegistrationPage courseSelectionCourseRegistrationPage() {
+        if (courseSelectionCourseRegistrationPage == null) {
+            courseSelectionCourseRegistrationPage = new CourseSelectionCourseRegistrationPage(page);
+        }
+        return courseSelectionCourseRegistrationPage;
     }
 }

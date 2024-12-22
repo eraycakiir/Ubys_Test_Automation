@@ -4,6 +4,7 @@ import com.microsoft.playwright.*;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import pages.Screens;
+import utilities.HelperFunctions.WaitMethods;
 
 import java.awt.*;
 import java.io.File;
