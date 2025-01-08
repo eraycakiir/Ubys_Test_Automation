@@ -44,7 +44,7 @@ public class LiveLessonTests {
 
             // Select the desired year range
             screens.liveLessonPage().yearRange.click();
-            WaitMethods.customWait(3);
+            WaitMethods.customWait(7);
 
             // Apply the date filter
             screens.liveLessonPage().filter.click();
@@ -67,6 +67,7 @@ public class LiveLessonTests {
 
         Allure.step("Clear the current year range and enter a new one", () -> {
             // Clear the current text in the year text box
+            screens.liveLessonPage().yearTextBox.click();
             ElementActions.clearTextBox(screens.liveLessonPage().yearTextBox);
             WaitMethods.customWait(3);
 

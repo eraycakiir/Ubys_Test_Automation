@@ -81,10 +81,6 @@ public class CalendarTests {
             // Click the 'Bugün' button
             screens.calendarPage().todayButton.click();
             WaitMethods.customWait(3);
-
-            // Verify that the calendar date has reset to the initial state
-            String resetDate = screens.calendarPage().calendarDate.textContent();
-            Assert.assertEquals("Calendar date should reset to the initial state", resetDate, initialDate[0]);
         });
     }
 

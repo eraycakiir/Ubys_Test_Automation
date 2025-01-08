@@ -27,7 +27,7 @@ public class LiveLessonPage {
 
     public LiveLessonPage(Page page) {
         this.page = page;
-        yearTextBox = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("2024-2025"));
+        yearTextBox = page.getByRole(AriaRole.TEXTBOX);
         season = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Güz"));
 
         filter = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Filtrele"));

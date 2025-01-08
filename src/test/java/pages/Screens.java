@@ -7,14 +7,18 @@ public class Screens {
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
     private DashboardPage_AccountSettingModal dashboardPageAccountSettingModal;
-    private StudentInformationScreenPage studentInformationScreen ;
-    private TranscriptPage transcriptPage ;
-    private MyLessonPage myLessonPage ;
-    private ConversationPage conversationPage ;
-    private LessonDetailPage lessonDetailPage ;
-    private LiveLessonPage liveLessonPage ;
-    private CalendarPage calendarPage ;
-    private CourseSelectionCourseRegistrationPage courseSelectionCourseRegistrationPage ;
+    private StudentInformationScreenPage studentInformationScreen;
+    private TranscriptPage transcriptPage;
+    private MyLessonPage myLessonPage;
+    private ConversationPage conversationPage;
+    private LessonDetailPage lessonDetailPage;
+    private LiveLessonPage liveLessonPage;
+    private CalendarPage calendarPage;
+    private CapApplicationPage capApplicationPage;
+    private CourseSelectionCourseRegistrationPage courseSelectionCourseRegistrationPage;
+    private ErasmusPage erasmusPage;
+    private DocumentRequestModal documentRequestModal;
+    private MyResumePage myResumePage;
 
 
     // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
@@ -41,6 +45,7 @@ public class Screens {
         }
         return dashboardPage;
     }
+
     // Dashboard Page Account SettingModal nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
     public DashboardPage_AccountSettingModal dashboardPage_AccountSettingModal() {
         if (dashboardPageAccountSettingModal == null) {
@@ -56,6 +61,7 @@ public class Screens {
         }
         return studentInformationScreen;
     }
+
     public TranscriptPage transcriptPage() {
         if (transcriptPage == null) {
             transcriptPage = new TranscriptPage(page);
@@ -69,18 +75,21 @@ public class Screens {
         }
         return conversationPage;
     }
+
     public MyLessonPage myLessonPage() {
         if (myLessonPage == null) {
             myLessonPage = new MyLessonPage(page);
         }
         return myLessonPage;
     }
+
     public LessonDetailPage lessonDetailPage() {
         if (lessonDetailPage == null) {
             lessonDetailPage = new LessonDetailPage(page);
         }
         return lessonDetailPage;
     }
+
     public LiveLessonPage liveLessonPage() {
         if (liveLessonPage == null) {
             liveLessonPage = new LiveLessonPage(page);
@@ -94,10 +103,37 @@ public class Screens {
         }
         return calendarPage;
     }
+
     public CourseSelectionCourseRegistrationPage courseSelectionCourseRegistrationPage() {
         if (courseSelectionCourseRegistrationPage == null) {
             courseSelectionCourseRegistrationPage = new CourseSelectionCourseRegistrationPage(page);
         }
         return courseSelectionCourseRegistrationPage;
+    }
+
+    public CapApplicationPage capApplicationPage() {
+        if (capApplicationPage == null) {
+            capApplicationPage = new CapApplicationPage(page);
+        }
+        return capApplicationPage;
+    }
+    public ErasmusPage erasmusPage() {
+        if (erasmusPage == null) {
+            erasmusPage = new ErasmusPage(page);
+        }
+        return erasmusPage;
+    }
+    public DocumentRequestModal documentRequestModal() {
+        if (documentRequestModal == null) {
+            documentRequestModal = new DocumentRequestModal(page);
+        }
+        return documentRequestModal;
+    }
+
+    public MyResumePage myResumePage() {
+        if (myResumePage == null) {
+            myResumePage = new MyResumePage(page);
+        }
+        return myResumePage;
     }
 }

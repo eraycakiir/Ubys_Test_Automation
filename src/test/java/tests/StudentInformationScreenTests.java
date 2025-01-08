@@ -4,6 +4,8 @@ import com.microsoft.playwright.FileChooser;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utilities.HelperFunctions.TabManagementMethods;
@@ -391,4 +393,46 @@ public class StudentInformationScreenTests {
             VisibleCheckMethods.isElementVisible(screens.studentInformationScreen().invalidIbanPopUp);
         });
     }
+
+    @Feature("Weekly Lesson Program")
+    @Description("Validate that the weekly lesson program modal is opened successfully.")
+    @Test
+    public void validateOpeningWeeklyLessonProgramModal() throws Exception {
+        // Navigate to the student information screen page
+        screens.studentInformationScreen().navigateToInformationScreenPage();
+
+        // Click on the Weekly Class Schedule button
+        screens.studentInformationScreen().weeklyClassSchedule.click();
+
+        // Verify that the weekly lesson plan heading is visible
+        Allure.step("Verify the Weekly Lesson Program modal is opened", () -> {
+            VisibleCheckMethods.isElementVisible(screens.studentInformationScreen().weeklyLessonPlanHeading);
+        });
+    }
+
+    @Feature("Change Semester Term")
+    @Description("Change the term to 'Yaz' and verify that it is successfully selected.")
+    @Test
+    public void changeTermVerify() throws Exception {
+        // Navigate to the student information screen page
+        screens.studentInformationScreen().navigateToInformationScreenPage();
+
+        // Click on the Weekly Class Schedule button
+        screens.studentInformationScreen().weeklyClassSchedule.click();
+
+        // Change the term to "Yaz"
+        Allure.step("Change Term", () -> {
+            screens.studentInformationScreen().selectTerm.selectOption("Yaz");
+            WaitMethods.customWait(6); // Wait for the change to reflect
+        });
+
+        // Verify that "Yaz" is selected in the dropdown
+        Allure.step("Verify 'Yaz' is selected in the dropdown", () -> {
+            // Verify that "Yaz" is selected in the dropdown
+            String selectedTerm = screens.studentInformationScreen().selectTerm.locator("option:checked").textContent();
+            Assert.assertEquals(selectedTerm.trim(), "Yaz", "The selected term should be 'Yaz'");
+        });
+    }
+
+
 }

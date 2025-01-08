@@ -78,6 +78,8 @@ public class StudentInformationScreenPage {
     public Locator invalidIbanPopUp;
     public Locator photoUploadBody;
     public Locator photoUploadText;
+    public Locator weeklyLessonPlanHeading;
+    public Locator selectTerm;
     public StudentInformationScreenPage(Page page) {
         this.page = page;
         //---Sub Module Elements-------//
@@ -149,7 +151,9 @@ public class StudentInformationScreenPage {
                 .filter(new Locator.FilterOptions().setHasText("Lütfen geçerli bir IBAN"))
                 .nth(1);
 
+        weeklyLessonPlanHeading = this.page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("HAFTALIK DERS PROGRAMI"));
 
+        selectTerm = page.locator("select#wcsReportSemester");
 
     }
     public void navigateToInformationScreenPage() {
