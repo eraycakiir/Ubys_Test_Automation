@@ -10,7 +10,7 @@ Bu proje, bir öğrenci bilgi sistemi (Student Information System) için kapsaml
 
 Proje, testlerin düzenli bir şekilde organize edilmesi ve okunabilirliğin artırılması için birkaç ana başlığa ayrılmıştır:
 
-![Ubys Test Automation Directory Structure](src/test/java/utilities/files/Ubys_Test_Automation%20Directory%20Structure.png)
+![Ubys Test Automation Directory Structure](src/test/java/utilities/files/Ubys_Test_Automation Diagram.png)
 ----
 
 ### 1. Test Sınıfları (Test Classes)
