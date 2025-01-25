@@ -55,7 +55,6 @@ Ubys_Test_Automation/
 ├── pom.xml
 ├── .gitignore
 
-
 ----
 
 ## Proje Yapısı
