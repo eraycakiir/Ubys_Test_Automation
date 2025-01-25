@@ -16,11 +16,11 @@ public class Hooks extends TestListenerAdapter {
     private Playwright playwright;
     private Browser browser;
     public static Page page;
-    public static Screens screens;  // Screens nesnesini statik olarak tanımladık
+    public static Screens screens;
     private BrowserContext context;
 
 
-    // Test başlamadan önce tarayıcıyı başlatır, sayfayı açar ve test için hazırlar
+    // Starts the browser before the test starts, opens the page and prepares it for testing
     @Override
     public void onTestStart(ITestResult result) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

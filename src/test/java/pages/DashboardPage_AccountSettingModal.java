@@ -6,42 +6,41 @@ import utilities.HelperFunctions.WaitMethods;
 
 public class DashboardPage_AccountSettingModal {
     private Page page;
+    private Locator capitalLetterMissingPopup;
     private Locator currentPasswordField;
-    private Locator newPasswordField;
+    private Locator lowerCaseMissingPopup;
+    private Locator missingNewPasswordRepeatPopup;
     private Locator newPasswordAgainField;
+    private Locator newPasswordField;
+    private Locator noNumberMissingPopup;
+    public Locator samePasswordErrorPopup;
+    public Locator shortPasswordErrorPopup;
     private Locator updateMyInformationButton;
     private Locator updatePasswordButton;
-    public Locator shortPasswordErrorPopup;
-    public Locator capitalLetterMissingPopup;
-    public Locator lowerCaseMissingPopup;
-    public Locator noNumberMissingPopup;
-    public Locator samePasswordErrorPopup;
-    public Locator missingNewPasswordRepeatPopup;
 
     public DashboardPage_AccountSettingModal(Page page) {
         this.page = page;
+        capitalLetterMissingPopup = page.getByText("Şifre en az 1 büyük karakter");
         currentPasswordField = page.getByPlaceholder("Mevcut Şifre");
-        newPasswordField = page.getByPlaceholder("Yeni Şifre", new Page.GetByPlaceholderOptions().setExact(true));
+        lowerCaseMissingPopup = page.getByText("Şifre en az 1 küçük karakter");
+        missingNewPasswordRepeatPopup = page.getByText("Yeni şifre ve yeni şifre");
         newPasswordAgainField = page.getByPlaceholder("Yeni Şifre Tekrar");
+        newPasswordField = page.getByPlaceholder("Yeni Şifre", new Page.GetByPlaceholderOptions().setExact(true));
+        noNumberMissingPopup = page.getByText("Şifre en az 1 rakam içermelidir");
+        samePasswordErrorPopup = page.getByText("Yeni şifre ve eski şifre aynı olamaz");
+        shortPasswordErrorPopup = page.getByText("Şifre en az 10 karakter uzunluğunda olmalıdır!");
         updateMyInformationButton = page.locator("#UpdateProfileSettings");
         updatePasswordButton = page.locator("#accordion div")
                 .filter(new Locator.FilterOptions().setHasText("Şifrenizi Güncellemek İçin Tı"))
                 .nth(1);
-
-        shortPasswordErrorPopup = page.getByText("Şifre en az 10 karakter uzunluğunda olmalıdır!");
-        capitalLetterMissingPopup = page.getByText("Şifre en az 1 büyük karakter");
-        lowerCaseMissingPopup = page.getByText("Şifre en az 1 küçük karakter");
-        noNumberMissingPopup = page.getByText("Şifre en az 1 rakam içermelidir");
-        samePasswordErrorPopup = page.getByText("Yeni şifre ve eski şifre aynı olamaz");
-        missingNewPasswordRepeatPopup = page.getByText("Yeni şifre ve yeni şifre");
     }
 
-    // Şifre değiştirme işlemi (tüm alanları doldur)
+    // Password change process (fill in all fields)
     public void changePassword(String oldPassword, String newPassword) {
         changePassword(oldPassword, newPassword, newPassword);
     }
 
-    // Şifre değiştirme işlemi (esnek parametrelerle)
+    // Password change process (with flexible parameters)
     public void changePassword(String oldPassword, String newPassword, String newPasswordAgain) {
         updatePasswordButton.click();
         currentPasswordField.click();

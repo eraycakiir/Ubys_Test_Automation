@@ -18,13 +18,13 @@ public class CaptchaSolver {
     private static final String CREATE_TASK_URL = "https://2captcha.com/in.php";
     private static final String GET_TASK_RESULT_URL = "https://2captcha.com/res.php";
 
-    // CAPTCHA çözümü almak için gerekli fonksiyon
+    // Function required to get CAPTCHA solution
     public String solveCaptcha(String siteKey, String url) throws Exception {
         String taskId = sendCaptcha(siteKey, url);  // CAPTCHA çözüm talebi gönderiliyor
         return getCaptchaResult(taskId);  // CAPTCHA çözümü bekleniyor
     }
 
-    // CAPTCHA çözüm talebi gönderme
+    // Send CAPTCHA solution request
     private String sendCaptcha(String siteKey, String url) throws Exception {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost post = new HttpPost(CREATE_TASK_URL);
@@ -52,7 +52,7 @@ public class CaptchaSolver {
         }
     }
 
-    // CAPTCHA çözüm sonucunu alma
+    // Get CAPTCHA solution result
     private String getCaptchaResult(String taskId) throws Exception {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             String resultUrl = GET_TASK_RESULT_URL + "?key=" + API_KEY + "&action=get&id=" + taskId + "&json=1";
@@ -76,22 +76,17 @@ public class CaptchaSolver {
         throw new Exception("CAPTCHA çözümü zaman aşımına uğradı.");
     }
 
-    // CAPTCHA çözümü için sayfada uygulama metodu (CAPTCHA işaretli mi kontrolü dahil)
+    // Application method on the page for solving CAPTCHA (including checking if CAPTCHA is checked)
     public void solveCaptchaForPage(Page page, String siteKey, String pageUrl, Locator captchaCheckbox) throws Exception {
-        // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol et
-        // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol etmeden önce bekleme ekleyelim
         System.out.println("Görsel doğrulama kontrolü için bekleniyor...");
         WaitMethods.customWait(5);  // CAPTCHA'nın yüklenmesi için 5 saniye bekle
 
-        // CAPTCHA'nın işaretlenip işaretlenmediğini kontrol et
         if (!captchaCheckbox.isChecked()) {
             System.out.println("Görsel doğrulama gerekiyor. 2Captcha ile çözülüyor...");
 
-            // 2Captcha ile reCAPTCHA çözümü al
             String recaptchaResponse = solveCaptcha(siteKey, pageUrl);
             System.out.println("reCAPTCHA çözüm yanıtı: " + recaptchaResponse);
 
-            // reCAPTCHA çözümünü sayfadaki form alanına gönder
             page.evaluate("document.getElementById('g-recaptcha-response').value = '" + recaptchaResponse + "';");
             page.evaluate("document.getElementById('g-recaptcha-response').dispatchEvent(new Event('change'));");
         } else {

@@ -12,37 +12,33 @@ import static utilities.TestData.username;
 
 public class LiveLessonPage {
     private Page page;
-    public Locator yearTextBox;
-    public Locator season;
-    public Locator filter;
-    public Locator yearRange;
-    public Locator datePickerButton;
-    public Locator watchSavedLesson;
-    public Locator yearTextbox;
-    public Locator fullScreenButton;
-    public Locator semesterDropdown;
     public Locator alertMessage;
+    public Locator datePickerButton;
+    public Locator filter;
+    public Locator fullScreenButton;
     public Locator invalidYearRange;
     public Locator noLiveLesson;
+    public Locator season;
+    public Locator semesterDropdown;
+    public Locator watchSavedLesson;
+    public Locator yearRange;
+    public Locator yearTextBox;
+    public Locator yearTextbox;
 
     public LiveLessonPage(Page page) {
         this.page = page;
-        yearTextBox = page.getByRole(AriaRole.TEXTBOX);
-        season = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Güz"));
-
-        filter = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Filtrele"));
-
-        yearRange = page.locator("span[data-action='selectYear']:has-text('2023 2024')");
-        invalidYearRange = page.locator("span[data-action='selectYear']:has-text('2026 2027')");
-        datePickerButton = page.locator("//span[contains(@class, 'input-group-addon') and contains(@class, 'datepickerbutton')]");
-        watchSavedLesson = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Kayıtlı Dersi İzle"));
-
-        yearTextbox = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Yıl Seçiniz"));
-        fullScreenButton = page.locator("//button[@aria-label='Tam ekran içerik']");
-        semesterDropdown = page.locator("select#semester");
         alertMessage = page.locator("//div[@role='alert' and contains(@class, 'toast-warning')]");
-        noLiveLesson =  page.locator("//span[@class='c-red']/b");
-
+        datePickerButton = page.locator("//span[contains(@class, 'input-group-addon') and contains(@class, 'datepickerbutton')]");
+        filter = page.locator("//div[@class='col-md-2 mt22']//a[@class='btn btn-block btn-primary']/i[@class='fa fa-filter']");
+        fullScreenButton = page.locator("//button[@aria-label='Tam ekran içerik']");
+        invalidYearRange = page.locator("span[data-action='selectYear']:has-text('2026 2027')");
+        noLiveLesson = page.locator("//span[@class='c-red']/b");
+        season = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Güz"));
+        semesterDropdown = page.locator("select#semester");
+        watchSavedLesson = page.locator("//div[@class='btn-group btn-group-xs' and @bis_skin_checked='1']//a[@class='btn btn-xs btn-warning' and contains(@onclick, 'attendAndGotoUrl')]");
+        yearRange = page.locator("span[data-action='selectYear']:has-text('2023 2024')");
+        yearTextBox = page.getByRole(AriaRole.TEXTBOX);
+        yearTextbox = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Yıl Seçiniz"));
     }
 
     public void navigateToLiveLesson() {
@@ -62,6 +58,4 @@ public class LiveLessonPage {
             screens = new Screens(newTab2);
         });
     }
-
-
 }

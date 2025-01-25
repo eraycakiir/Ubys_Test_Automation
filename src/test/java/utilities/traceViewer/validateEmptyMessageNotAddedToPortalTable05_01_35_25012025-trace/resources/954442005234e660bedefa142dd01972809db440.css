@@ -1,0 +1,245 @@
+.page-content {
+  background-color: #FFFFFF;
+}
+
+.page-pusher {
+  padding-top: 30px;
+}
+
+.navbar-default {
+  background-color: #FFFFFF;
+}
+
+.circle-icon {
+  position: relative;
+  padding-left: 40px !important;
+}
+
+  .circle-icon i {
+    width: 35px;
+    height: 35px;
+    border-radius: 30px;
+    border: 2px solid;
+    text-align: center;
+    padding-top: 9px;
+    position: absolute;
+    top: 8px;
+    left: 4px;
+  }
+
+  .circle-icon .badge {
+    position: absolute;
+    left: 20px;
+    top: 3px;
+  }
+
+.circle-icon-no-text {
+  position: relative;
+  padding-left: 28px !important;
+  cursor: pointer;
+  display: initial !important;
+  line-height: 50px !important;
+}
+
+.bootstrap-dialog .modal-header {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/*****************************/
+/* FONT SİZES                */
+/*****************************/
+.f-07 {
+  font-size: 0.7em;
+}
+
+.f-075 {
+  font-size: 0.75em;
+}
+
+.f-08 {
+  font-size: 0.8em;
+}
+
+.f-085 {
+  font-size: 0.85em;
+}
+
+.f-09 {
+  font-size: 0.9em;
+}
+
+.f-095 {
+  font-size: 0.95em;
+}
+
+.f-11 {
+  font-size: 1.1em;
+}
+
+.f-12 {
+  font-size: 1.2em;
+}
+
+.f-13 {
+  font-size: 1.3em;
+}
+
+.f-14 {
+  font-size: 1.4em;
+}
+
+.f-15 {
+  font-size: 1.5em;
+}
+
+.f-16 {
+  font-size: 1.6em;
+}
+
+.f-17 {
+  font-size: 1.7em;
+}
+
+.f-18 {
+  font-size: 1.8em;
+}
+
+.f-19 {
+  font-size: 1.9em;
+}
+
+.f-2 {
+  font-size: 2em;
+}
+
+/*********************/
+/*********************/
+
+.ml250 {
+  margin-left: 250px !important;
+}
+
+/*--------------*/
+/*TAB LEFT >> START
+/*--------------*/
+#content-pills {
+  margin-top: 1px;
+}
+
+  #content-pills li {
+    margin-top: 0;
+  }
+
+    #content-pills li a {
+      font-size: .88em;
+      border: 1px solid transparent;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-right: 1px solid #e0e0e0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      font-weight: 700;
+    }
+
+      #content-pills li a i {
+        font-size: 1.4em;
+        vertical-align: sub;
+        text-align: center;
+        vertical-align: middle;
+        width: 25px;
+      }
+
+    #content-pills li.active a {
+      color: #1d74c7;
+      background-color: transparent;
+      border: 1px solid #e0e0e0;
+      border-right: 0;
+    }
+/*--------------*/
+/*TAB LEFT >> END
+/*--------------*/
+.ms-choice {
+  height: 30px;
+}
+
+.qctree, .qctree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 25px;
+  padding-top: 5px;
+}
+
+.qctree {
+  padding-left: 0;
+  padding-top: 0;
+}
+
+  .qctree ul, .qctree li {
+    margin-bottom: 5px;
+  }
+
+.qctreeForAdd, .qctreeForAdd ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 25px;
+  padding-top: 5px;
+}
+
+.qctreeForAdd {
+  padding-left: 15px;
+  padding-top: 0;
+}
+
+  .qctreeForAdd ul, .qctreeForAdd li {
+    margin-bottom: 5px;
+  }
+
+
+/********************/
+/*autocomplete      */
+/********************/
+.autocomplete-suggestions {
+  border: 1px solid #999;
+  background: #FFF;
+  overflow: auto;
+}
+
+.autocomplete-suggestion {
+  padding: 2px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.autocomplete-selected {
+  background: #F0F0F0;
+}
+
+.autocomplete-suggestions strong {
+  font-weight: normal;
+  color: #3399FF;
+}
+
+.autocomplete-group {
+  padding: 2px 5px;
+}
+
+  .autocomplete-group strong {
+    display: block;
+    border-bottom: 1px solid #000;
+  }
+/*autocomplete*/
+
+.ml60{margin-left:60px;}
+
+.search-input{
+  background:url("../Images/iconmonstr-magnifier-10-24.png") 3px 3px no-repeat;
+  padding-left:35px;
+}
+
+.badge {
+  background-color: #CF1EAA !important;
+  color: #fff !important;
+}

@@ -7,12 +7,10 @@ public class BrowserFactory {
 
     private Playwright playwright;
 
-    // Constructor, Playwright nesnesini başlatır
     public BrowserFactory() {
         playwright = Playwright.create();
     }
 
-    // Tarayıcı ismine göre browser nesnesini döner
     public Browser getBrowser(String browserName) {
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions().setHeadless(false);
         BrowserType browserType;
@@ -42,7 +40,6 @@ public class BrowserFactory {
         return browserType.launch(launchOptions); // Tarayıcıyı başlat
     }
 
-    // Yeni bir tarayıcı bağlamı (context) oluşturur ve trace kaydı başlatır
     public BrowserContext createPageAndGetContext(Browser browser, ITestResult result) {
         BrowserContext context = browser.newContext();
         context.tracing().start(new Tracing.StartOptions()

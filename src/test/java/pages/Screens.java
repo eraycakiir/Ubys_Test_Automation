@@ -20,25 +20,21 @@ public class Screens {
     private DocumentRequestModal documentRequestModal;
     private MyResumePage myResumePage;
 
-
-    // Varsayılan constructor, page nesnesi olmadan çağrıldığında kullanılır
+    // Default constructor is used when called without a page object
     public Screens() {
     }
 
-    // Page nesnesi ile constructor, sayfa üzerinden işlemler yapılacak
+    // Constructor with Page object, operations will be performed on the page
     public Screens(Page page) {
         this.page = page;
     }
 
-    // LoginPage nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
     public LoginPage loginPage() {
         if (loginPage == null) {
             loginPage = new LoginPage(page);
         }
         return loginPage;
     }
-
-    // Dashboard Page nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
     public DashboardPage dashboardPage() {
         if (dashboardPage == null) {
             dashboardPage = new DashboardPage(page);
@@ -46,7 +42,6 @@ public class Screens {
         return dashboardPage;
     }
 
-    // Dashboard Page Account SettingModal nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
     public DashboardPage_AccountSettingModal dashboardPage_AccountSettingModal() {
         if (dashboardPageAccountSettingModal == null) {
             dashboardPageAccountSettingModal = new DashboardPage_AccountSettingModal(page);
@@ -54,7 +49,6 @@ public class Screens {
         return dashboardPageAccountSettingModal;
     }
 
-    // Dashboard Page Account SettingModal nesnesini oluşturur ve geri döner, eğer zaten oluşturulmuşsa mevcut olanı döner
     public StudentInformationScreenPage studentInformationScreen() {
         if (studentInformationScreen == null) {
             studentInformationScreen = new StudentInformationScreenPage(page);

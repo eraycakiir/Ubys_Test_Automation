@@ -15,31 +15,29 @@ import static utilities.TestData.username;
 
 public class MyLessonPage {
     private Page page;
-    public Locator thesisInformation;
-    public Locator projectTopic;
-    public Locator projectConsultant;
-    public Locator showPastClasses;
     public Locator firstYear;
-    public Locator secondYear;
-    public Locator thirdYear;
-    public Locator lessonSearchBox;
-    public Locator lessonName;
     public Locator lessonLink;
-
+    public Locator lessonName;
+    public Locator lessonSearchBox;
+    public Locator projectConsultant;
+    public Locator projectTopic;
+    public Locator secondYear;
+    public Locator showPastClasses;
+    public Locator thesisInformation;
+    public Locator thirdYear;
 
     public MyLessonPage(Page page) {
         this.page = page;
-        thesisInformation = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Tez Bilgileri"));
-        projectTopic = page.getByText("Tez / Proje Konusu");
-        projectConsultant = page.getByText("Tez / Proje Danışmanı");
-        showPastClasses = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Geçmiş Dönem Derslerini Göster"));
         firstYear = page.getByText("- Güz - YANO: 0");
-        secondYear = page.getByText("- Bahar - YANO: 3,90");
-        thirdYear = page.getByText("- Güz - YANO: 3,30");
-        lessonSearchBox = page.locator("#search-Bahar2023table");
-        lessonName = page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("Bilgi Sistemleri"));
         lessonLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("YZMU"));
-
+        lessonName = page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("Bilgi Sistemleri"));
+        lessonSearchBox = page.locator("#search-Bahar2023table");
+        projectConsultant = page.getByText("Tez / Proje Danışmanı");
+        projectTopic = page.getByText("Tez / Proje Konusu");
+        secondYear = page.getByText("- Bahar - YANO: 3,90");
+        showPastClasses = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Geçmiş Dönem Derslerini Göster"));
+        thesisInformation = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Tez Bilgileri"));
+        thirdYear = page.getByText("- Güz - YANO: 3,30");
     }
 
     public void navigateToMyLessonPage() {

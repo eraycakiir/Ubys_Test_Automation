@@ -27,8 +27,7 @@ public class TranscriptPage {
     public Locator historicalTranscript;
 
     public Locator fallSemester_2023;
-    public Locator springSemester_2023
-            ;
+    public Locator springSemester_2023;
     public Locator fallSemester_2024;
 
     private List<String> gradeOrder = Arrays.asList("FF", "DD", "DC", "CC", "CB", "BB", "BA", "AA");
@@ -48,6 +47,8 @@ public class TranscriptPage {
         springSemester_2023 = page.getByText("Yılı Bahar Dönemi");
         fallSemester_2024 = page.getByText("2024 Yılı Güz Dönemi");
     }
+
+    // Navigates to the Transcript page by performing login and screen navigation
     public void navigateToTranscriptPage() {
         Allure.step("Login to the application with valid credentials", () -> {
             screens.loginPage().performLogin(TestData.username, TestData.getOldPassword());
@@ -66,109 +67,69 @@ public class TranscriptPage {
         });
     }
 
-    // Rastgele bir `select` elemanını seçip belirtilen yönde (yükseltme veya düşürme) notu ayarlayan method
+    // Randomly selects a grade from the dropdown and adjusts it based on the specified direction (increase or decrease)
     public void changeGradeRandomly(boolean increase) {
         Random random = new Random();
         int randomIndex;
         Locator selectedElement;
         String currentGrade;
 
-        // AA veya FF olmayan bir not seçene kadar döngüye devam et
         do {
-            randomIndex = random.nextInt(Math.min(selectElements.count(), 10)); // İlk 10 eleman içinden rastgele seçim
+            randomIndex = random.nextInt(Math.min(selectElements.count(), 10));
             selectedElement = selectElements.nth(randomIndex);
-
-            // Mevcut notu al
             currentGrade = (String) selectedElement.evaluate("el => el.options[el.selectedIndex].text");
         } while (currentGrade.equals("AA") || currentGrade.equals("FF"));
 
-        System.out.println("Seçilen uygun not: " + currentGrade);
-
         int gradeIndex = gradeOrder.indexOf(currentGrade);
-        if (gradeIndex == -1) {
-            System.out.println("Mevcut not sıralamada bulunamadı: " + currentGrade);
-            return;
-        }
+        if (gradeIndex == -1) return;
 
-        // Yükseltme veya düşürme işlemini gerçekleştir
         String newGrade = currentGrade;
         if (increase && gradeIndex < gradeOrder.size() - 1) {
-            newGrade = gradeOrder.get(gradeIndex + 1); // Bir üst not
+            newGrade = gradeOrder.get(gradeIndex + 1);
         } else if (!increase && gradeIndex > 0) {
-            newGrade = gradeOrder.get(gradeIndex - 1); // Bir alt not
+            newGrade = gradeOrder.get(gradeIndex - 1);
         }
 
-        // Yeni notu ayarla
         selectedElement.selectOption(newGrade);
-        System.out.println("Yeni ayarlanan not: " + newGrade);
     }
-    // Ortalama değerinin belirtilen değişikliğe göre değişip değişmediğini kontrol eden method
+
+    // Verifies if the average changes after a random grade adjustment
     public boolean isAverageChangedAfterRandomChange(boolean shouldIncrease) {
         double initialAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
-
-        // Rastgele bir notu artır veya azalt
         changeGradeRandomly(shouldIncrease);
         saveCalculateTranscript.click();
         WaitMethods.customWait(3);
-
         double updatedAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Güncellenen Ortalama: " + updatedAverage);
-        // Eğer shouldIncrease true ise ortalamanın arttığını kontrol et, false ise azaldığını kontrol et
         return shouldIncrease ? updatedAverage > initialAverage : updatedAverage < initialAverage;
     }
-    public boolean isAverageResetAfterChange(boolean shouldIncrease) {
-        // İlk ortalamayı al
-        double initialAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
 
-        // Ortalama değişimini uygula (yükseltme veya düşürme)
+    // Resets the average and verifies if it returns to the initial value after changes
+    public boolean isAverageResetAfterChange(boolean shouldIncrease) {
+        double initialAverage = Double.parseDouble(totalAverage.innerText());
         changeGradeRandomly(shouldIncrease);
         saveCalculateTranscript.click();
         WaitMethods.customWait(5);
-
-        // Güncellenen ortalamayı al ve değiştiğini doğrula
         double updatedAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Güncellenen Ortalama: " + updatedAverage);
-        boolean isChanged = shouldIncrease ? updatedAverage > initialAverage : updatedAverage < initialAverage;
-        if (!isChanged) {
-            System.out.println("Ortalama beklenildiği gibi değişmedi.");
+        if ((shouldIncrease && updatedAverage <= initialAverage) || (!shouldIncrease && updatedAverage >= initialAverage)) {
             return false;
         }
-
-        // Reset butonuna tıklayarak eski değere dön
         resetButton.click();
         WaitMethods.customWait(5);
-
-        // Reset işleminden sonraki ortalamayı al ve başlangıç ortalamasına eşit olduğunu doğrula
         double resetAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Sıfırlandıktan sonraki Ortalama: " + resetAverage);
         return resetAverage == initialAverage;
     }
+
+    // Ensures the average remains unchanged when the same grade is selected
     public boolean isAverageUnchangedAfterSameGradeSelection() {
         Random random = new Random();
-        int randomIndex = random.nextInt(Math.min(selectElements.count(), 10)); // İlk 10 eleman içinden rastgele seçim
+        int randomIndex = random.nextInt(Math.min(selectElements.count(), 10));
         Locator selectedElement = selectElements.nth(randomIndex);
-
-        // Mevcut notu al
         String currentGrade = (String) selectedElement.evaluate("el => el.options[el.selectedIndex].text");
-        System.out.println("Seçilen not: " + currentGrade);
-
-        // İlk ortalamayı al
         double initialAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Başlangıçtaki Ortalama: " + initialAverage);
-
-        // Aynı notu tekrar seç
         selectedElement.selectOption(currentGrade);
         saveCalculateTranscript.click();
         WaitMethods.customWait(3);
-
-        // Güncellenen ortalamayı al
         double updatedAverage = Double.parseDouble(totalAverage.innerText());
-        System.out.println("Güncellenen Ortalama: " + updatedAverage);
-
-        // Beklenti: Ortalama değişmemelidir
         return initialAverage == updatedAverage;
     }
-
 }

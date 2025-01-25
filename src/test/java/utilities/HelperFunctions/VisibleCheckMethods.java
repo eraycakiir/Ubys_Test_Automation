@@ -9,12 +9,9 @@ import java.util.Map;
 public class VisibleCheckMethods {
 
 
-    // Genel pop-up kontrol metodu
     public static boolean isElementVisible(Locator locator) {
         return locator.isVisible();
     }
-
-    // Locator listesi alarak tüm nesnelerin görünürlüğünü kontrol eden metot
     public static boolean validateElementsVisibility(Map<Locator, String> locators) {
         boolean allVisible = true;
 
@@ -23,10 +20,8 @@ public class VisibleCheckMethods {
             String elementName = entry.getValue();
 
             try {
-                // Elementin yüklenmesini bekleyin
                 locator.waitFor();
 
-                // Görünürlüğü kontrol edin
                 if (!locator.isVisible()) {
                     System.out.println(elementName + " is not visible"); // Hangi elementin görünür olmadığını loglayın
                     allVisible = false;

@@ -14,22 +14,21 @@ import static utilities.TestData.username;
 
 public class DashboardPage {
     private Page page;
-    private Locator nameAndSurnameText;
-    private Locator userPortalSettingsButton;
     private Locator accountSettingsButton;
+    private Locator nameAndSurnameText;
     private Locator menuButton;
+    private Locator userPortalSettingsButton;
     private Locator studentSystemButton;
     private Locator studentInfoLink;
 
     // Constructor, Dashboard Page'i Playwright sayfası ile başlatır
     public DashboardPage(Page page) {
         this.page = page;
-        nameAndSurnameText = page.getByRole(AriaRole.PARAGRAPH);
         accountSettingsButton = page.getByRole(AriaRole.NAVIGATION)
                 .getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName("Hsp.Ayar"));
+        nameAndSurnameText = page.getByRole(AriaRole.PARAGRAPH);
         userPortalSettingsButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(""));
-
-        // Navigasyon işlemleri için eklenen locators
+        // Added locators for navigation operations
         menuButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(" Menü"));
         studentSystemButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("ÖĞRENCİ SİSTEMİ "));
         studentInfoLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("- Öğrenci Bilgi Ekranı"));
@@ -43,7 +42,7 @@ public class DashboardPage {
             screens.dashboardPage().openTheAccountSettingsModal();
         });
     }
-    // Girişin doğrulanması için loginVerification methodu
+    // Login Verification method to verify the login
     public void loginVerification() {
         String actualText = nameAndSurnameText.textContent();
         String expectedText = "ERAY ÇAKIR";

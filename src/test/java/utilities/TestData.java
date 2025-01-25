@@ -32,10 +32,10 @@ public class TestData {
         return "TR00 0000 0000 0000 0000 0000 00";
     }
     public static String validUploadPhoto = System.getProperty("user.home")+"/Projects/Ubys_Test_Automation/src/test/java/utilities/files/Eray_Biyometrik_Foto.png";
-    // Sabit kullanıcı adı
+    // Fixed username
     public static String username = "Y230240099";
 
-    // Rastgele bir şifre oluşturma fonksiyonu (en az 10 karakter, büyük harf, küçük harf, sayı ve özel karakter içerir)
+    // Function to generate a random password (at least 10 characters, includes uppercase, lowercase, numbers and special characters)
     public static String generateRandomPassword() {
         String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -46,13 +46,13 @@ public class TestData {
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder();
 
-        // En az bir büyük harf, küçük harf, sayı ve özel karakter ekle
+        // Add at least one uppercase letter, lowercase letter, number and special character
         password.append(upperCaseLetters.charAt(random.nextInt(upperCaseLetters.length())));
         password.append(lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length())));
         password.append(digits.charAt(random.nextInt(digits.length())));
         password.append(specialCharacters.charAt(random.nextInt(specialCharacters.length())));
 
-        // Geriye kalan karakterleri rastgele ekle
+        // Add remaining characters randomly
         for (int i = 4; i < 12; i++) {
             password.append(allCharacters.charAt(random.nextInt(allCharacters.length())));
         }
@@ -60,7 +60,7 @@ public class TestData {
         return password.toString();
     }
 
-    // Eski şifreyi dosyadan okur
+    // Reads old password from file
     public static String getOldPassword() {
         try {
             String password = new String(Files.readAllBytes(Paths.get(PASSWORD_FILE))).trim();
@@ -75,7 +75,7 @@ public class TestData {
         }
     }
 
-    // Yeni şifreyi dosyaya yazar
+    // Writes the new password to the file
     public static void updatePassword(String newPassword) {
         try {
             Files.write(Paths.get(PASSWORD_FILE), newPassword.getBytes());

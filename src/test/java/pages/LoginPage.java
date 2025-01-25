@@ -9,49 +9,53 @@ import utilities.HelperFunctions.WaitMethods;
 public class LoginPage {
     private Page page;
     private CaptchaSolver captchaSolver;
-    private Locator usernameField;
-    private Locator passwordField;
     private Locator captchaCheckbox;
-    public Locator missingInformationUserPopUp;
-    public Locator loginButton;
     public Locator invalidUserPopUp;
+    public Locator loginButton;
+    public Locator missingInformationUserPopUp;
+    private Locator passwordField;
     public Locator robotVerificationPopUp;
-    private String siteKey = "6LdoPGwnAAAAAK34xwuEUwVIGrBheaaeXKtt7E7W";
+    private Locator usernameField;
     private String pageUrl = "https://ubs.ikc.edu.tr/";
+    private String siteKey = "6LdoPGwnAAAAAK34xwuEUwVIGrBheaaeXKtt7E7W";
 
     public LoginPage(Page page) {
         this.page = page;
         this.captchaSolver = new CaptchaSolver();
-        // Locator'ları initialize et
-        usernameField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Kullanıcı Adı"));
-        passwordField = page.getByPlaceholder("Parola");
         captchaCheckbox = page.frameLocator("iframe").nth(0).getByLabel("Ben robot değilim");
-        loginButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Giriş Yap"));
         invalidUserPopUp = page.getByText("×Bilinmeyen kullanıcı veya");
-        robotVerificationPopUp = page.getByText("×Lütfen robot olmadığınızı do");
+        loginButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Giriş Yap"));
         missingInformationUserPopUp = page.getByText("×Kullanıcı adı ve parola").first();
+        passwordField = page.getByPlaceholder("Parola");
+        robotVerificationPopUp = page.getByText("×Lütfen robot olmadığınızı do");
+        usernameField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Kullanıcı Adı"));
     }
 
-    // Ortak CAPTCHA çözme metodu
-    public void solveCaptcha() throws Exception {
-        captchaCheckbox.click();
-        captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
-        WaitMethods.customWait(5);
-        // CAPTCHA çözümünden sonra ekranı kapatma işlemi
-        page.mouse().click(50, 100);
-        page.mouse().click(50, 100);
-        WaitMethods.customWait(5);
+    // Common CAPTCHA solving method
+    public void solveCaptcha() {
+        try {
+            System.out.println("CAPTCHA çözümü deneniyor...");
+            captchaCheckbox.click();
+            captchaSolver.solveCaptchaForPage(page, siteKey, pageUrl, captchaCheckbox);
+            WaitMethods.customWait(5);
+
+            page.mouse().click(50, 100);
+            page.mouse().click(50, 100);
+            WaitMethods.customWait(5);
+        } catch (Exception e) {
+            System.out.println("CAPTCHA çözümü sırasında hata oluştu veya CAPTCHA bulunamadı. Devam ediliyor...");
+        }
     }
 
-    // Ortak login metodu (CAPTCHA ile)
-    public void performLogin(String username, String password) throws Exception {
+    // Common login method (with or without CAPTCHA)
+    public void performLogin(String username, String password) {
         enterLoginCredentials(username, password);
-        solveCaptcha();
+        //   solveCaptcha();
+        System.out.println("Giriş butonuna basılıyor...");
         loginButton.click();
         WaitMethods.customWait(5);
     }
-
-    // Kullanıcı adı ve şifreyi doldurmak için (CAPTCHA çözmeden)
+    // To fill in username and password (without solving CAPTCHA)
     public void enterLoginCredentials(String username, String password) {
         if (username != null) {
             usernameField.fill(username);

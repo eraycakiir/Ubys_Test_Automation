@@ -167,7 +167,7 @@ public class StudentInformationScreenPage {
             screens = new Screens(newTab);
         });
     }
-    // Sub Module Elementleri için görünürlük kontrolü döndüren method
+    // Method that returns visibility control for Sub Module Elements
     public Map<Locator, String> getSubModuleElementsForVisibility() {
         Map<Locator, String> elementsToCheck = new HashMap<>();
         elementsToCheck.put(lessons, "Lessons");
@@ -182,7 +182,7 @@ public class StudentInformationScreenPage {
         elementsToCheck.put(weeklyClassSchedule, "Weekly Class Schedule");
         return elementsToCheck;
     }
-    // Upper Module ve Diğer dropdown elementleri için görünürlük kontrolü döndüren method
+    // Method that returns visibility control for Upper Module and Other dropdown elements
     public Map<Locator, String> getUpperModuleElementsForVisibility() {
         Map<Locator, String> elementsToCheck = new HashMap<>();
         elementsToCheck.put(selectAcademicProgram, "Select Academic Program");

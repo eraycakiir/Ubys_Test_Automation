@@ -13,19 +13,17 @@ import static utilities.TestData.username;
 
 @Listeners(utilities.Hooks.class)
 public class CalendarPage {
-
     private Page page;
-    public Locator exportToPdf;
-    public Locator dateChangeButton;
     public Locator calendarDate;
+    public Locator dateChangeButton;
+    public Locator exportToPdf;
     public Locator todayButton;
     public CalendarPage(Page page) {
         this.page = page;
-        exportToPdf = page.getByRole(AriaRole.BUTTON,new Page.GetByRoleOptions().setName("Export to PDF"));
-        dateChangeButton = page.locator("a[role='button'] > span.k-icon.k-i-arrow-e");
         calendarDate = page.locator("span.k-sm-date-format[data-bind='text: formattedShortDate']");
+        dateChangeButton = page.locator("a[role='button'] > span.k-icon.k-i-arrow-e");
+        exportToPdf = page.getByRole(AriaRole.BUTTON,new Page.GetByRoleOptions().setName("Export to PDF"));
         todayButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Bugün"));
-
     }
 
     public void navigateToCalendar() {
@@ -45,5 +43,4 @@ public class CalendarPage {
             screens = new Screens(newTab2);
         });
     }
-
 }

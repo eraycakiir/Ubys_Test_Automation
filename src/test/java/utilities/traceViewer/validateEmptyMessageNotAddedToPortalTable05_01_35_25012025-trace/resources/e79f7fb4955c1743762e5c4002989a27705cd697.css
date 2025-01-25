@@ -1,0 +1,10 @@
+.table-fix-header {
+    table-layout:fixed;
+    margin-bottom:0;
+}
+
+.table-fix-div {
+  overflow-y:auto;
+  margin-bottom:0;
+  font-size:0.9em;
+}

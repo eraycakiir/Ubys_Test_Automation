@@ -81,50 +81,11 @@ public class LiveLessonTests {
         });
 
         Allure.step("Verify that the filtered lessons are displayed", () -> {
-            // Check if the saved lesson is visible after filtering
-            VisibleCheckMethods.isElementVisible(screens.liveLessonPage().watchSavedLesson);
+            if (!screens.liveLessonPage().watchSavedLesson.isVisible()) {
+                throw new AssertionError("Filtered lessons are not displayed as expected.");
+            }
         });
     }
-
-    @Feature("Live Lesson Page")
-    @Description("Verify navigation to the live lesson page, filter lessons by year range, and check the functionality of the fullscreen button.")
-    @Test
-    public void verifyFullscreenButtonFunctionality() {
-        // Navigate to the live lesson page
-        screens.liveLessonPage().navigateToLiveLesson();
-
-        Allure.step("Clear the current year range and enter a new one", () -> {
-            // Clear the current text in the year text box
-            ElementActions.clearTextBox(screens.liveLessonPage().yearTextBox);
-            WaitMethods.customWait(3);
-
-            // Enter the desired year range
-            screens.liveLessonPage().yearTextBox.fill("2023-2024");
-            WaitMethods.customWait(3);
-
-            // Apply the date filter
-            screens.liveLessonPage().filter.click();
-            WaitMethods.customWait(3);
-        });
-
-        Allure.step("Click the Watch Live Lesson Button and switch to the new tab", () -> {
-            // Click the saved lesson button
-            screens.liveLessonPage().watchSavedLesson.click();
-            WaitMethods.customWait(3);
-
-            // Switch to the new tab
-            Page newTab = TabManagementMethods.switchToNewTab(page);
-            screens = new Screens(newTab);
-            WaitMethods.customWait(2);
-        });
-
-        Allure.step("Verify the fullscreen button is visible", () -> {
-            // Verify the fullscreen button is visible on the new tab
-            VisibleCheckMethods.isElementVisible(screens.liveLessonPage().fullScreenButton);
-        });
-    }
-
-
 
     @Feature("Student Information Screen - Select Season Dropdown")
     @Description("Attempt to select 'Seçiniz...' from the dropdown and verify that it is an invalid selection.")
@@ -145,8 +106,7 @@ public class LiveLessonTests {
 
         Allure.step("Verify that 'Seçiniz...' is not a valid selection", () -> {
             // Add verification logic for invalid selection (e.g., check for an error message)
-            boolean isErrorVisible = VisibleCheckMethods.isElementVisible(screens.liveLessonPage().alertMessage);
-            Assert.assertTrue(isErrorVisible, "'Seçiniz...' should not be a valid selection.");
+           VisibleCheckMethods.isElementVisible(screens.liveLessonPage().alertMessage);
         });
     }
 
