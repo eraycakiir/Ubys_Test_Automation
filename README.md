@@ -1,8 +1,8 @@
-# Test Otomasyon Projesi - README 📘 
+# UBYS Test Otomasyon Projesi - README 📘 
 
 ## Projenin Amacı 🎯
 
-Bu proje, bir öğrenci bilgi sistemi (Student Information System) için kapsamlı bir test otomasyonu sağlamayı amaçlamaktadır. Test senaryoları, sistemin farklı modüllerinin işlevselliğini ve kullanıcı deneyimini doğrulamak için oluşturulmuştur. Tüm testler, **Allure raporlama sistemi** ile entegre edilmiştir.
+Bu proje, bir Üniversite Bilgi Yönetim Sistemi (UBYS) için kapsamlı bir test otomasyonu sağlamayı amaçlamaktadır. Test senaryoları, sistemin farklı modüllerinin işlevselliğini ve kullanıcı deneyimini doğrulamak için oluşturulmuştur. Tüm testler, **Allure raporlama sistemi** ile entegre edilmiştir.
 
 ----
 
