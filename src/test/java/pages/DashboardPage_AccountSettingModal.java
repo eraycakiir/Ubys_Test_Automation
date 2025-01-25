@@ -6,13 +6,13 @@ import utilities.HelperFunctions.WaitMethods;
 
 public class DashboardPage_AccountSettingModal {
     private Page page;
-    private Locator capitalLetterMissingPopup;
+    public Locator capitalLetterMissingPopup;
     private Locator currentPasswordField;
-    private Locator lowerCaseMissingPopup;
-    private Locator missingNewPasswordRepeatPopup;
-    private Locator newPasswordAgainField;
-    private Locator newPasswordField;
-    private Locator noNumberMissingPopup;
+    public Locator lowerCaseMissingPopup;
+    public Locator missingNewPasswordRepeatPopup;
+    public Locator newPasswordAgainField;
+    public Locator newPasswordField;
+    public Locator noNumberMissingPopup;
     public Locator samePasswordErrorPopup;
     public Locator shortPasswordErrorPopup;
     private Locator updateMyInformationButton;
