@@ -5,6 +5,58 @@
 Bu proje, bir öğrenci bilgi sistemi (Student Information System) için kapsamlı bir test otomasyonu sağlamayı amaçlamaktadır. Test senaryoları, sistemin farklı modüllerinin işlevselliğini ve kullanıcı deneyimini doğrulamak için oluşturulmuştur. Tüm testler, **Allure raporlama sistemi** ile entegre edilmiştir.
 
 ---
+Ubys_Test_Automation/
+├── src/
+│   ├── main/
+│   ├── test/
+│       ├── java/
+│           ├── pages/
+│               ├── CalendarPage.java
+│               ├── CapApplicationPage.java
+│               ├── ConversationPage.java
+│               ├── CourseSelectionCourseRegistrationPage.java
+│               ├── DashboardPage.java
+│               ├── DashboardPage_AccountSettingModal.java
+│               ├── DocumentRequestModal.java
+│               ├── ErasmusPage.java
+│               ├── LessonDetailPage.java
+│               ├── LiveLessonPage.java
+│               ├── LoginPage.java
+│               ├── MyLessonPage.java
+│               ├── MyResumePage.java
+│               ├── Screens.java
+│               ├── StudentInformationScreenPage.java
+│               ├── TranscriptPage.java
+│           ├── tests/
+│               ├── CalendarTests.java
+│               ├── CapApplicationTests.java
+│               ├── ChangePasswordTests.java
+│               ├── CourseSelectionCourseRegistrationTests.java
+│               ├── DocumentRequestModalTests.java
+│               ├── ErasmusPageTest.java
+│               ├── LiveLessonTests.java
+│               ├── LoginTests.java
+│               ├── MyLessonTests.java
+│               ├── MyResumeTest.java
+│               ├── StudentInformationScreenTests.java
+│               ├── TranscriptTests.java
+│           ├── utilities/
+│               ├── HelperFunctions/
+│                   ├── ElementActions.java
+│                   ├── TabManagementMethods.java
+│                   ├── VisibleCheckMethods.java
+│                   ├── WaitMethods.java
+│               ├── traceViewer/
+│                   ├── BrowserFactory.java
+│                   ├── CaptchaSolver.java
+│                   ├── Hooks.java
+│                   ├── PropertyUtils.java
+│                   ├── TestData.java
+├── pom.xml
+├── .gitignore
+
+
+----
 
 ## Proje Yapısı
 
