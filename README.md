@@ -94,7 +94,7 @@ Başarısız testler için izleme dosyaları oluşturur ve test adımlarını ad
 
 #### Trace Viewer Kullanımı:
 1. Oluşturulan trace dosyasını açarak, test sırasında yapılan tüm işlemleri inceleyebilirsiniz. İzleme dosyaları, hataların tekrar incelenmesini sağlar.
-2. 
+
 ## Trace Viewer Nasıl Kullanılır?
 ### 1. **Trace Dosyasını Oluşturma**
 
